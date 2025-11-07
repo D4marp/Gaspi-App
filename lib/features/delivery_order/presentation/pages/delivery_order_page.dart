@@ -125,14 +125,13 @@ class _DeliveryOrderPageState extends ConsumerState<DeliveryOrderPage> {
                         Icon(
                           Icons.inbox_outlined,
                           size: 64,
-                          color: Colors.grey[400],
+                          color: AppTheme.textHintColor,
                         ),
                         const SizedBox(height: 16),
                         Text(
                           'Tidak ada delivery order',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 16,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: AppTheme.textSecondaryColor,
                           ),
                         ),
                       ],
@@ -169,11 +168,11 @@ class _DeliveryOrderPageState extends ConsumerState<DeliveryOrderPage> {
           _selectedStatus = selected ? status : null;
         });
       },
-      backgroundColor: Colors.grey[200],
+      backgroundColor: AppTheme.backgroundColor,
       selectedColor: AppTheme.primaryColor.withOpacity(0.2),
       checkmarkColor: AppTheme.primaryColor,
       labelStyle: TextStyle(
-        color: isSelected ? AppTheme.primaryColor : Colors.grey[700],
+        color: isSelected ? AppTheme.primaryColor : AppTheme.textSecondaryColor,
         fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
       ),
     );
@@ -189,15 +188,15 @@ class _DeliveryOrderCard extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'pending':
-        return Colors.orange;
+        return AppTheme.warningColor;
       case 'on_delivery':
-        return Colors.blue;
+        return AppTheme.infoColor;
       case 'completed':
-        return Colors.green;
+        return AppTheme.successColor;
       case 'cancelled':
-        return Colors.red;
+        return AppTheme.errorColor;
       default:
-        return Colors.grey;
+        return AppTheme.textSecondaryColor;
     }
   }
 
@@ -226,8 +225,7 @@ class _DeliveryOrderCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       deliveryOrder.doNumber,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -256,12 +254,12 @@ class _DeliveryOrderCard extends StatelessWidget {
               // Customer Info
               Row(
                 children: [
-                  const Icon(Icons.person_outline, size: 16, color: Colors.grey),
+                  Icon(Icons.person_outline, size: 16, color: AppTheme.textSecondaryColor),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       deliveryOrder.customerName,
-                      style: const TextStyle(fontSize: 14),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                 ],
@@ -270,13 +268,15 @@ class _DeliveryOrderCard extends StatelessWidget {
 
               Row(
                 children: [
-                  const Icon(Icons.location_on_outlined,
-                      size: 16, color: Colors.grey),
+                  Icon(Icons.location_on_outlined,
+                      size: 16, color: AppTheme.textSecondaryColor),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       deliveryOrder.customerAddress,
-                      style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppTheme.textSecondaryColor,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -288,12 +288,14 @@ class _DeliveryOrderCard extends StatelessWidget {
               // Delivery Date
               Row(
                 children: [
-                  const Icon(Icons.calendar_today_outlined,
-                      size: 16, color: Colors.grey),
+                  Icon(Icons.calendar_today_outlined,
+                      size: 16, color: AppTheme.textSecondaryColor),
                   const SizedBox(width: 8),
                   Text(
                     DateFormatter.formatDate(deliveryOrder.deliveryDate),
-                    style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppTheme.textSecondaryColor,
+                    ),
                   ),
                 ],
               ),
@@ -304,15 +306,12 @@ class _DeliveryOrderCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: AppTheme.backgroundColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   '${deliveryOrder.items.length} Item',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
             ],

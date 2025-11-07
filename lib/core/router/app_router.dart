@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/delivery_order/presentation/pages/delivery_order_page.dart';
+import '../theme/app_theme.dart';
 
 /// Router Provider dengan RBAC
 final routerProvider = Provider<GoRouter>((ref) {
@@ -139,13 +140,13 @@ class HomePage extends ConsumerWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.1),
+                        color: AppTheme.primaryColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         user?.role.displayName ?? 'User',
                         style: const TextStyle(
-                          color: Colors.blue,
+                          color: AppTheme.primaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                         ),
@@ -176,14 +177,14 @@ class HomePage extends ConsumerWidget {
                     _MenuCard(
                       icon: Icons.local_shipping,
                       title: 'Delivery Order',
-                      color: Colors.blue,
+                      color: AppTheme.primaryColor,
                       onTap: () => context.push('/delivery-orders'),
                     ),
                   if (user?.role.hasPermission('inventory', 'view') ?? false)
                     _MenuCard(
                       icon: Icons.inventory_2,
                       title: 'Inventory',
-                      color: Colors.green,
+                      color: AppTheme.secondaryColor,
                       onTap: () {
                         // TODO: Navigate to inventory
                       },
@@ -192,7 +193,7 @@ class HomePage extends ConsumerWidget {
                     _MenuCard(
                       icon: Icons.devices_other,
                       title: 'Asset Tracking',
-                      color: Colors.orange,
+                      color: AppTheme.warningColor,
                       onTap: () {
                         // TODO: Navigate to asset
                       },
@@ -201,20 +202,20 @@ class HomePage extends ConsumerWidget {
                     _MenuCard(
                       icon: Icons.build,
                       title: 'Maintenance',
-                      color: Colors.purple,
+                      color: AppTheme.tertiaryColor,
                       onTap: () => context.push('/maintenance'),
                     ),
                   if (user?.role.isAdmin ?? false)
                     _MenuCard(
                       icon: Icons.people,
                       title: 'Users',
-                      color: Colors.teal,
+                      color: AppTheme.infoColor,
                       onTap: () => context.push('/users'),
                     ),
                   _MenuCard(
                     icon: Icons.assessment,
                     title: 'Reports',
-                    color: Colors.indigo,
+                    color: AppTheme.successColor,
                     onTap: () {
                       // TODO: Navigate to reports
                     },
@@ -257,8 +258,7 @@ class _MenuCard extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -305,11 +305,11 @@ class UnauthorizedPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.lock_outline, size: 64, color: Colors.red),
+            Icon(Icons.lock_outline, size: 64, color: AppTheme.errorColor),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Anda tidak memiliki akses ke halaman ini',
-              style: TextStyle(fontSize: 16),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 24),
             ElevatedButton(

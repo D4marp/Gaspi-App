@@ -1,0 +1,3 @@
+output_dir: lib/core/gen
+output_file_template: ${class_name}.gen.dart
+line_length: 80

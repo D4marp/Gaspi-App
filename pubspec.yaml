@@ -49,13 +49,13 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # Assets
+  # Assets - Available on Android & iOS
   assets:
     - assets/images/
     - assets/icons/
     - assets/logos/
 
-  # Fonts - Nunito Sans Global
+  # Fonts - Nunito Sans Global (Available on Android & iOS)
   fonts:
     - family: NunitoSans
       fonts:

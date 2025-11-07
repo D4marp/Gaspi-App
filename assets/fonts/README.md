@@ -1,141 +1,57 @@
-# Assets Fonts
+# Fonts Directory
 
-Folder untuk menyimpan custom fonts.
+## Nunito Sans Font Family
 
-## Struktur yang Direkomendasikan:
+Font yang digunakan di aplikasi Gaspi adalah **Nunito Sans**.
 
-```
-assets/fonts/
-├── Poppins/
-│   ├── Poppins-Regular.ttf
-│   ├── Poppins-Medium.ttf
-│   ├── Poppins-SemiBold.ttf
-│   └── Poppins-Bold.ttf
-├── Inter/
-│   ├── Inter-Regular.ttf
-│   ├── Inter-Medium.ttf
-│   └── Inter-Bold.ttf
-└── README.md
-```
+### Download Font
+Download Nunito Sans dari Google Fonts:
+https://fonts.google.co[text](../../../../../Downloads/Nunito_Sans/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf) [text](../../../../../Downloads/Nunito_Sans/NunitoSans-Italic-VariableFont_YTLC,opsz,wdth,wght.ttf)m/specimen/Nunito+Sans
 
-## Cara Setup Font:
+### File yang Dibutuhkan
+Letakkan file-file berikut di folder `assets/fonts/`:
 
-### 1. Download Font
-- [Google Fonts](https://fonts.google.com/)
-- Download format **TTF** atau **OTF**
+1. `NunitoSans-Regular.ttf` (weight: 400)
+2. `NunitoSans-Medium.ttf` (weight: 500)
+3. `NunitoSans-SemiBold.ttf` (weight: 600)
+4. `NunitoSans-Bold.ttf` (weight: 700)
+5. `NunitoSans-ExtraBold.ttf` (weight: 800)
 
-### 2. Tambahkan ke pubspec.yaml:
-```yaml
-flutter:
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Poppins/Poppins-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
-          weight: 700
-```
+### Penggunaan
 
-### 3. Set Default Font di Theme:
-Edit `lib/core/theme/app_theme.dart`:
+Font Nunito Sans sudah diset sebagai font global di `AppTheme`.
+
+#### Cara Menggunakan di Code:
+
 ```dart
-static ThemeData get lightTheme {
-  return ThemeData(
-    fontFamily: 'Poppins',  // Set default font
-    // ... rest of theme
-  );
-}
-```
+// Otomatis menggunakan Nunito Sans karena sudah set di theme
+Text(
+  'Hello World',
+  style: Theme.of(context).textTheme.titleLarge,
+)
 
-### 4. Gunakan di Code:
-```dart
-// Auto menggunakan default font
-Text('Hello World')
-
-// Override font
+// Atau manual
 Text(
   'Hello World',
   style: TextStyle(
-    fontFamily: 'Poppins',
+    fontFamily: 'NunitoSans',
+    fontSize: 16,
     fontWeight: FontWeight.w600, // SemiBold
   ),
 )
 ```
 
-## Font Weight Reference:
+### Font Weights yang Tersedia:
+- `FontWeight.w400` - Regular
+- `FontWeight.w500` - Medium
+- `FontWeight.w600` - SemiBold
+- `FontWeight.w700` - Bold
+- `FontWeight.w800` - ExtraBold
 
-| Weight | Value | Common Name |
-|--------|-------|-------------|
-| 100    | Thin  | Hairline    |
-| 200    | ExtraLight | UltraLight |
-| 300    | Light | Light       |
-| 400    | Regular | Normal    |
-| 500    | Medium | Medium     |
-| 600    | SemiBold | DemiBold |
-| 700    | Bold  | Bold        |
-| 800    | ExtraBold | UltraBold |
-| 900    | Black | Heavy       |
-
-## Recommended Fonts:
-
-### Modern & Clean:
-- **Poppins** - Geometric sans-serif
-- **Inter** - System UI alternative
-- **Roboto** - Google's material design
-- **SF Pro** - iOS system font
-
-### Professional:
-- **Open Sans** - Humanist sans-serif
-- **Lato** - Serious but friendly
-- **Nunito** - Rounded terminals
-
-### Display/Headers:
-- **Montserrat** - Bold geometric
-- **Raleway** - Elegant sans-serif
-
-## Best Practices:
-
-1. **Limit Font Families**
-   - Max 2 font families per app
-   - One for body text, one for headers
-
-2. **Include Multiple Weights**
-   - Regular (400) - body text
-   - Medium (500) - emphasis
-   - SemiBold (600) - sub-headers
-   - Bold (700) - headers
-
-3. **File Size**
-   - TTF generally smaller than OTF
-   - Only include weights you'll use
-   - Consider using system font alternatives
-
-4. **Licensing**
-   - Check font license for commercial use
-   - Google Fonts are free & open source
-
-## Font Optimization:
-
-### Use Variable Fonts (if available):
-```yaml
-fonts:
-  - family: Inter
-    fonts:
-      - asset: assets/fonts/Inter/Inter-VariableFont.ttf
-```
-
-Single file contains all weights = smaller app size!
-
----
-
-**Note:** Setelah menambahkan font:
+## Catatan
+Setelah menambahkan font files, jalankan:
 ```bash
 flutter pub get
-# No need to run build_runner for fonts
+flutter clean
+flutter run
 ```
-
-Font akan otomatis tersedia untuk digunakan.

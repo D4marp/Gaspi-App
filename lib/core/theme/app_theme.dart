@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 
 /// Tema aplikasi Gaspi dengan warna dan styling konsisten
 class AppTheme {
-  // Colors
-  static const Color primaryColor = Color(0xFF1976D2); // Biru
-  static const Color secondaryColor = Color(0xFFFFA726); // Orange
-  static const Color accentColor = Color(0xFF4CAF50); // Hijau
+  // Brand Colors
+  static const Color primaryColor = Color(0xFF099FE4); // Primary Blue
+  static const Color secondaryColor = Color(0xFF5CBA4B); // Secondary Green
+  static const Color tertiaryColor = Color(0xFF007EFF); // Tertiary Blue
+  
+  // Status Colors
   static const Color errorColor = Color(0xFFD32F2F); // Merah
   static const Color warningColor = Color(0xFFFFA000); // Amber
-  static const Color successColor = Color(0xFF388E3C); // Hijau tua
-  static const Color infoColor = Color(0xFF1976D2); // Biru
+  static const Color successColor = Color(0xFF5CBA4B); // Green (same as secondary)
+  static const Color infoColor = Color(0xFF099FE4); // Blue (same as primary)
 
   // Background Colors
   static const Color backgroundColor = Color(0xFFF5F5F5);
@@ -21,13 +23,18 @@ class AppTheme {
   static const Color textSecondaryColor = Color(0xFF757575);
   static const Color textHintColor = Color(0xFFBDBDBD);
 
+  // Typography - Nunito Sans
+  static const String fontFamily = 'NunitoSans';
+
   // Light Theme
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    fontFamily: fontFamily,
     colorScheme: ColorScheme.light(
       primary: primaryColor,
       secondary: secondaryColor,
+      tertiary: tertiaryColor,
       surface: surfaceColor,
       error: errorColor,
     ),
@@ -42,6 +49,7 @@ class AppTheme {
         color: Colors.white,
         fontSize: 18,
         fontWeight: FontWeight.w600,
+        fontFamily: fontFamily,
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -104,6 +112,103 @@ class AppTheme {
       color: Colors.grey[300],
       thickness: 1,
       space: 1,
+    ),
+    textTheme: const TextTheme(
+      // Display styles
+      displayLarge: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 57,
+        fontWeight: FontWeight.w700,
+        color: textPrimaryColor,
+      ),
+      displayMedium: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 45,
+        fontWeight: FontWeight.w700,
+        color: textPrimaryColor,
+      ),
+      displaySmall: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 36,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      // Headline styles
+      headlineLarge: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 32,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      headlineMedium: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      // Title styles
+      titleLarge: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 22,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      titleMedium: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      titleSmall: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      // Body styles
+      bodyLarge: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: textPrimaryColor,
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: textPrimaryColor,
+      ),
+      bodySmall: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: textSecondaryColor,
+      ),
+      // Label styles
+      labelLarge: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      labelMedium: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        color: textPrimaryColor,
+      ),
+      labelSmall: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: 11,
+        fontWeight: FontWeight.w500,
+        color: textSecondaryColor,
+      ),
     ),
   );
 }

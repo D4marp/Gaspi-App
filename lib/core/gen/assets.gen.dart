@@ -20,6 +20,9 @@ class Assets {
 
   /// Logos
   static const $AssetsLogosGen logos = $AssetsLogosGen();
+  
+  /// Fonts
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
 }
 
 /// Images Generator
@@ -68,6 +71,27 @@ class $AssetsLogosGen {
   // String get companyLogo => '$_basePath/company_logo.png';
   
   /// Get full path for logo
+  String getPath(String fileName) => '$_basePath/$fileName';
+}
+
+/// Fonts Generator
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+
+  /// Font Family Names
+  static const String nunitoSans = 'NunitoSans';
+  
+  /// Base path for fonts
+  static const String _basePath = 'assets/fonts';
+  
+  /// Font files
+  String get regular => '$_basePath/NunitoSans-Regular.ttf';
+  String get medium => '$_basePath/NunitoSans-Medium.ttf';
+  String get semiBold => '$_basePath/NunitoSans-SemiBold.ttf';
+  String get bold => '$_basePath/NunitoSans-Bold.ttf';
+  String get extraBold => '$_basePath/NunitoSans-ExtraBold.ttf';
+  
+  /// Get full path for font
   String getPath(String fileName) => '$_basePath/$fileName';
 }
 

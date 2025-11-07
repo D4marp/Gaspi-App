@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/gen/assets.gen.dart';
-import '../../../../core/theme/app_theme.dart';
 
 /// Splash Screen dengan animasi
 class SplashPage extends StatefulWidget {
@@ -59,61 +58,40 @@ class _SplashPageState extends State<SplashPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.backgroundColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Animated Logo
-            AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, child) {
-                return FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: ScaleTransition(
-                    scale: _scaleAnimation,
-                    child: child,
-                  ),
-                );
-              },
-              child: SizedBox(
-                width: 180,
-                height: 180,
-                child: SvgPicture.asset(
-                  Assets.logos.splash,
-                  fit: BoxFit.contain,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color(0xFF099FE4), // Primary Blue
+              const Color(0xFF007EFF), // Tertiary Blue
+            ],
+          ),
+        ),
+        child: Center(
+          child: AnimatedBuilder(
+            animation: _animationController,
+            builder: (context, child) {
+              return FadeTransition(
+                opacity: _fadeAnimation,
+                child: ScaleTransition(
+                  scale: _scaleAnimation,
+                  child: child,
                 ),
+              );
+            },
+            child: SizedBox(
+              width: 200,
+              height: 200,
+              child: SvgPicture.asset(
+                Assets.logos.splash,
+                fit: BoxFit.contain,
               ),
             ),
-            const SizedBox(height: 40),
-
-            // App Name
-            Text(
-              'Gaspi Mobile',
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.primaryColor,
-                  ),
-            ),
-            const SizedBox(height: 12),
-
-            // Tagline
-            Text(
-              'Solusi Manajemen Pengiriman',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppTheme.textSecondaryColor,
-              ),
-            ),
-            const SizedBox(height: 60),
-
-            // Loading Indicator
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                AppTheme.primaryColor,
-              ),
-              strokeWidth: 3,
-            ),
-          ],
+          ),
         ),
       ),
     );

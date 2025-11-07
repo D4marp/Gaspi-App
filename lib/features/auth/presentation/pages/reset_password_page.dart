@@ -1,50 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/utils/dialog_helper.dart';
-import '../providers/auth_provider.dart';
 
-/// Login Page dengan form email dan password
-class LoginPage extends ConsumerStatefulWidget {
-  const LoginPage({super.key});
+/// Reset Password Page
+class ResetPasswordPage extends StatefulWidget {
+  final String? email;
+
+  const ResetPasswordPage({super.key, this.email});
 
   @override
-  ConsumerState<LoginPage> createState() => _LoginPageState();
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _obscurePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.email != null) {
+      _emailController.text = widget.email!;
+    }
+  }
 
   @override
   void dispose() {
     _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
-  Future<void> _handleLogin() async {
+  Future<void> _handleResetPassword() async {
     if (!_formKey.currentState!.validate()) return;
 
     try {
       // Show loading
-      DialogHelper.showLoading(context, message: 'Login...');
+      DialogHelper.showLoading(context, message: 'Sending reset link...');
 
-      // Call login provider
-      await ref.read(authProvider.notifier).login(
-            _emailController.text.trim(),
-            _passwordController.text,
-          );
+      // TODO: Call reset password API
+      await Future.delayed(const Duration(seconds: 2));
 
       // Hide loading
       if (mounted) DialogHelper.hideLoading(context);
 
-      // Navigate to home
-      if (mounted) context.go('/home');
+      // Show success
+      if (mounted) {
+        SnackBarHelper.showSuccess(
+          context,
+          'Reset link sent to ${_emailController.text}',
+        );
+        // Navigate back to login after 2 seconds
+        Future.delayed(const Duration(seconds: 2), () {
+          if (mounted) context.pop();
+        });
+      }
     } catch (e) {
       // Hide loading
       if (mounted) DialogHelper.hideLoading(context);
@@ -60,15 +71,31 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF393D4E)),
+          onPressed: () => context.pop(),
+        ),
+        title: const Text(
+          'Reset Password',
+          style: TextStyle(color: Color(0xFF393D4E)),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minHeight: screenHeight - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom,
+              minHeight: screenHeight -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom -
+                  kToolbarHeight,
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -76,15 +103,35 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               ),
               child: Column(
                 children: [
-                  SizedBox(height: screenHeight * 0.13),
+                  SizedBox(height: screenHeight * 0.08),
 
                   // Logo SVG
                   SizedBox(
-                
+                    width: 80,
+                    height: 80,
                     child: SvgPicture.asset(
                       Assets.logos.logo,
                       fit: BoxFit.contain,
                     ),
+                  ),
+                  SizedBox(height: screenHeight * 0.06),
+
+                  // Title & Description
+                  Text(
+                    'Enter your email',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: const Color(0xFF393D4E),
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  Text(
+                    'We\'ll send you a link to reset your password',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: const Color(0xCC777985),
+                        ),
                   ),
                   SizedBox(height: screenHeight * 0.08),
 
@@ -96,7 +143,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       children: [
                         // Email Label
                         Text(
-                          'Email or Username',
+                          'Email',
                           style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                 color: const Color(0xFF393D4E),
                                 fontWeight: FontWeight.w500,
@@ -156,111 +203,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             return null;
                           },
                         ),
-                        SizedBox(height: screenHeight * 0.05),
+                        SizedBox(height: screenHeight * 0.06),
 
-                        // Password Label
-                        Text(
-                          'Password',
-                          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                                color: const Color(0xFF393D4E),
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                        const SizedBox(height: 12),
-
-                        // Password Field
-                        TextFormField(
-                          controller: _passwordController,
-                          obscureText: _obscurePassword,
-                          style: const TextStyle(
-                            color: Color(0xCC777985),
-                            fontSize: 14,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: 'Minimum 8 characters',
-                            hintStyle: const TextStyle(
-                              color: Color(0xCC777985),
-                              fontSize: 14,
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscurePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: const Color(0xCC777985),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscurePassword = !_obscurePassword;
-                                });
-                              },
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              borderSide: const BorderSide(
-                                color: Color(0xFFDCDBDB),
-                                width: 1.5,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              borderSide: const BorderSide(
-                                color: Color(0xFFDCDBDB),
-                                width: 1.5,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              borderSide: const BorderSide(
-                                color: Color(0xFF0286F8),
-                                width: 1.5,
-                              ),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Password harus diisi';
-                            }
-                            if (value.length < 6) {
-                              return 'Password minimal 6 karakter';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: screenHeight * 0.04),
-
-                        // Forgot Password
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              context.push(
-                                '/forgot-password',
-                                extra: _emailController.text,
-                              );
-                            },
-                            child: Text(
-                              'Forgot Password?',
-                              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    color: const Color(0xFF007EFF),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: screenHeight * 0.05),
-
-                        // Login Button
+                        // Send Button
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: _handleLogin,
+                            onPressed: _handleResetPassword,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF0286F8),
                               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -270,8 +219,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               elevation: 0,
                             ),
                             child: Text(
-                              'Login',
-                              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              'Send Reset Password',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -282,7 +234,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.08),
+                  SizedBox(height: screenHeight * 0.12),
 
                   // Footer
                   Text(

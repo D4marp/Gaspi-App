@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/splash_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/delivery_order/presentation/pages/delivery_order_page.dart';
 import '../theme/app_theme.dart';
@@ -12,12 +13,13 @@ final routerProvider = Provider<GoRouter>((ref) {
   final currentUser = ref.watch(currentUserProvider);
 
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/splash',
     redirect: (context, state) {
+      final isSplash = state.matchedLocation == '/splash';
       final isLoggingIn = state.matchedLocation == '/login';
 
-      // Jika belum login dan bukan di login page, redirect ke login
-      if (!isAuthenticated && !isLoggingIn) {
+      // Jika belum login dan bukan di splash/login page, redirect ke login
+      if (!isAuthenticated && !isLoggingIn && !isSplash) {
         return '/login';
       }
 
@@ -48,6 +50,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null; // Tidak ada redirect
     },
     routes: [
+      // Splash Screen
+      GoRoute(
+        path: '/splash',
+        builder: (context, state) => const SplashPage(),
+      ),
+
       // Auth Routes
       GoRoute(
         path: '/login',

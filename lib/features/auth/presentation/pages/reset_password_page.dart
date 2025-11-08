@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/utils/dialog_helper.dart';
 
-/// Reset Password Page
+/// Reset Password Page dengan Figma Design (Simplified)
 class ResetPasswordPage extends StatefulWidget {
   final String? email;
 
@@ -21,7 +20,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.email != null) {
+    if (widget.email != null && widget.email!.isNotEmpty) {
       _emailController.text = widget.email!;
     }
   }
@@ -37,13 +36,17 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
     try {
       // Show loading
-      DialogHelper.showLoading(context, message: 'Sending reset link...');
+      if (mounted) {
+        DialogHelper.showLoading(context, message: 'Sending reset link...');
+      }
 
       // TODO: Call reset password API
       await Future.delayed(const Duration(seconds: 2));
 
       // Hide loading
-      if (mounted) DialogHelper.hideLoading(context);
+      if (mounted) {
+        DialogHelper.hideLoading(context);
+      }
 
       // Show success
       if (mounted) {
@@ -51,14 +54,18 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           context,
           'Reset link sent to ${_emailController.text}',
         );
-        // Navigate back to login after 2 seconds
-        Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) context.pop();
-        });
+
+        // Wait 2 seconds then pop
+        await Future.delayed(const Duration(seconds: 2));
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
       }
     } catch (e) {
       // Hide loading
-      if (mounted) DialogHelper.hideLoading(context);
+      if (mounted) {
+        DialogHelper.hideLoading(context);
+      }
 
       // Show error
       if (mounted) {
@@ -66,6 +73,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       }
     }
   }
+
+  /// Build decorative graphics pattern dari Figma design
+  
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +87,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF393D4E)),
-          onPressed: () => context.pop(),
-        ),
-        title: const Text(
-          'Reset Password',
-          style: TextStyle(color: Color(0xFF393D4E)),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back, color: Color(0xFF393D4E)),
+        //   onPressed: () => Navigator.of(context).pop(),
+        // ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -98,42 +104,19 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   kToolbarHeight,
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.08,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: screenHeight * 0.08),
-
                   // Logo SVG
                   SizedBox(
-                    width: 80,
-                    height: 80,
+                 
                     child: SvgPicture.asset(
                       Assets.logos.logo,
                       fit: BoxFit.contain,
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.06),
-
-                  // Title & Description
-                  Text(
-                    'Enter your email',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: const Color(0xFF393D4E),
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
-                  Text(
-                    'We\'ll send you a link to reset your password',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: const Color(0xCC777985),
-                        ),
-                  ),
-                  SizedBox(height: screenHeight * 0.08),
 
                   // Form Fields
                   Form(
@@ -203,7 +186,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             return null;
                           },
                         ),
-                        SizedBox(height: screenHeight * 0.06),
+                        SizedBox(height: screenHeight * 0.04),
 
                         // Send Button
                         SizedBox(
@@ -234,7 +217,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.12),
+                  SizedBox(height: screenHeight * 0.08),
 
                   // Footer
                   Text(

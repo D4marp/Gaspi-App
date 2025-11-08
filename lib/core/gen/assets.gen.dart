@@ -14,8 +14,14 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/QR.svg
+  String get qr => 'assets/icons/QR.svg';
+
   /// File path: assets/icons/README.md
   String get readme => 'assets/icons/README.md';
+
+  /// File path: assets/icons/add.svg
+  String get add => 'assets/icons/add.svg';
 
   /// File path: assets/icons/box.svg
   String get box => 'assets/icons/box.svg';
@@ -26,6 +32,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/document-text.svg
   String get documentText => 'assets/icons/document-text.svg';
 
+  /// File path: assets/icons/home-2.svg
+  String get home2 => 'assets/icons/home-2.svg';
+
   /// File path: assets/icons/mdi_gas-cylinder.svg
   String get mdiGasCylinder => 'assets/icons/mdi_gas-cylinder.svg';
 
@@ -34,6 +43,15 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/people.svg
   String get people => 'assets/icons/people.svg';
+
+  /// File path: assets/icons/profile-circle.svg
+  String get profileCircle => 'assets/icons/profile-circle.svg';
+
+  /// File path: assets/icons/setting-2.svg
+  String get setting2 => 'assets/icons/setting-2.svg';
+
+  /// File path: assets/icons/shield-tick copy.svg
+  String get shieldTickCopy => 'assets/icons/shield-tick copy.svg';
 
   /// File path: assets/icons/shield-tick.svg
   String get shieldTick => 'assets/icons/shield-tick.svg';
@@ -55,13 +73,19 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<String> get values => [
+    qr,
     readme,
+    add,
     box,
     convert3dCube,
     documentText,
+    home2,
     mdiGasCylinder,
     menu,
     people,
+    profileCircle,
+    setting2,
+    shieldTickCopy,
     shieldTick,
     shop,
     stickynote,
@@ -89,8 +113,18 @@ class $AssetsImagesGen {
   AssetGenImage get onboarding3 =>
       const AssetGenImage('assets/images/onboarding_3.png');
 
+  /// File path: assets/images/onboarding_bg.png
+  AssetGenImage get onboardingBg =>
+      const AssetGenImage('assets/images/onboarding_bg.png');
+
   /// List of all assets
-  List<dynamic> get values => [readme, onboarding1, onboarding2, onboarding3];
+  List<dynamic> get values => [
+    readme,
+    onboarding1,
+    onboarding2,
+    onboarding3,
+    onboardingBg,
+  ];
 }
 
 class $AssetsLogosGen {

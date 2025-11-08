@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/gen/assets.gen.dart';
 
 /// Splash Screen dengan animasi
@@ -42,9 +43,15 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void _navigateToLogin() {
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () async {
       if (mounted) {
-        context.go('/login');
+        // Check if user has already seen onboarding
+        final prefs = await SharedPreferences.getInstance();
+        final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
+        
+        // Navigate to onboarding if first launch, otherwise to login
+        final route = hasSeenOnboarding ? '/login' : '/onboarding';
+        if (mounted) context.go(route);
       }
     });
   }

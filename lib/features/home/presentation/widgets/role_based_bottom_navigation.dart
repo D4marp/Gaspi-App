@@ -3,10 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/gen/assets.gen.dart';
 
-/// Bottom Navigation Menu berdasarkan Role
+/// Bottom Navigation Menu berdasarkan Role - Full Width dengan QR Center
 class RoleBasedBottomNavigation extends StatelessWidget {
   final String currentRoute;
-  final String userRole; // 'super_admin', 'admin', 'maintenance', 'supervisor'
+  final String userRole; // 'SUPERADMIN', 'ADMIN', 'MAINTENANCE', 'SUPERVISOR', 'PRODUCTION'
 
   const RoleBasedBottomNavigation({
     super.key,
@@ -15,44 +15,18 @@ class RoleBasedBottomNavigation extends StatelessWidget {
   });
 
   List<NavItem> _getNavItems() {
-    switch (userRole.toLowerCase()) {
-      case 'super_admin':
-        return _getSuperAdminItems();
-      case 'admin':
+    switch (userRole.toUpperCase()) {
+      case 'SUPERADMIN':
+      case 'ADMIN':
         return _getAdminItems();
-      case 'maintenance':
+      case 'MAINTENANCE':
         return _getMaintenanceItems();
-      case 'supervisor':
-      case 'production':
+      case 'SUPERVISOR':
+      case 'PRODUCTION':
         return _getSupervisorItems();
       default:
-        return _getAdminItems(); // Default to admin
+        return _getAdminItems();
     }
-  }
-
-  List<NavItem> _getSuperAdminItems() {
-    return [
-      NavItem(
-        label: 'Home',
-        icon: Assets.icons.home2,
-        route: '/home',
-      ),
-      NavItem(
-        label: 'Reg. Assets',
-        icon: Assets.icons.shieldTick,
-        route: '/assets-registration',
-      ),
-      NavItem(
-        label: 'Maintenance',
-        icon: Assets.icons.setting2,
-        route: '/maintenance',
-      ),
-      NavItem(
-        label: 'Account',
-        icon: Assets.icons.profileCircle,
-        route: '/account',
-      ),
-    ];
   }
 
   List<NavItem> _getAdminItems() {
@@ -113,14 +87,14 @@ class RoleBasedBottomNavigation extends StatelessWidget {
         route: '/home',
       ),
       NavItem(
-        label: 'QR Scan',
-        icon: Assets.icons.qr,
-        route: '/qr-scan',
-      ),
-      NavItem(
         label: 'Report',
         icon: Assets.icons.documentText,
         route: '/supervisor-report',
+      ),
+      NavItem(
+        label: 'QR Scan',
+        icon: Assets.icons.qr,
+        route: '/qr-scan',
       ),
       NavItem(
         label: 'Account',
@@ -133,8 +107,11 @@ class RoleBasedBottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navItems = _getNavItems();
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
+      width: screenWidth,
+      height: 96,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -142,18 +119,19 @@ class RoleBasedBottomNavigation extends StatelessWidget {
             blurRadius: 78,
             offset: const Offset(0, -11),
             spreadRadius: 0,
-          ),
+          )
         ],
       ),
       child: Stack(
         children: [
-          /// Background with rounded top
+          // Background Navigation Bar - Full Width
           Positioned(
             left: 0,
             right: 0,
-            bottom: 0,
+            top: 0,
             child: Container(
-              height: 90,
+              width: screenWidth,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               decoration: const ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -162,29 +140,19 @@ class RoleBasedBottomNavigation extends StatelessWidget {
                     topRight: Radius.circular(30),
                   ),
                 ),
-              ),
-            ),
-          ),
-
-          /// Navigation items
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              height: 90,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              decoration: const ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0x19000000),
+                    blurRadius: 47,
+                    offset: Offset(0, -11),
+                    spreadRadius: 0,
+                  )
+                ],
               ),
               child: Row(
+                mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: List.generate(
                   navItems.length,
                   (index) => _buildNavItem(
@@ -197,34 +165,37 @@ class RoleBasedBottomNavigation extends StatelessWidget {
             ),
           ),
 
-          /// Floating center button (QR icon)
+          // Floating QR Button (Centered at top)
           Positioned(
             left: 0,
             right: 0,
-            top: 0,
+            top: -15,
             child: Center(
-              child: Container(
-                width: 66,
-                height: 66,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF007EFF),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF007EFF).withOpacity(0.35),
-                      blurRadius: 22,
-                      offset: const Offset(0, 0),
-                      spreadRadius: 0,
+              child: GestureDetector(
+                onTap: () => context.go('/qr-scan'),
+                child: Container(
+                  width: 66,
+                  height: 66,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF007EFF),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF007EFF).withOpacity(0.35),
+                        blurRadius: 22,
+                        offset: const Offset(0, 0),
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
+                  child: SvgPicture.asset(
+                    Assets.icons.qr,
+                    width: 32,
+                    height: 32,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.white,
+                      BlendMode.srcIn,
                     ),
-                  ],
-                ),
-                child: SvgPicture.asset(
-                  Assets.icons.qr,
-                  width: 32,
-                  height: 32,
-                  colorFilter: const ColorFilter.mode(
-                    Colors.white,
-                    BlendMode.srcIn,
                   ),
                 ),
               ),
@@ -244,8 +215,8 @@ class RoleBasedBottomNavigation extends StatelessWidget {
       onTap: () => context.go(item.route),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          /// Icon
           SvgPicture.asset(
             item.icon,
             width: 24,
@@ -255,9 +226,7 @@ class RoleBasedBottomNavigation extends StatelessWidget {
               BlendMode.srcIn,
             ),
           ),
-          const SizedBox(height: 12),
-
-          /// Label
+          const SizedBox(height: 6),
           Text(
             item.label,
             style: TextStyle(
@@ -277,7 +246,7 @@ class RoleBasedBottomNavigation extends StatelessWidget {
 /// Model untuk Navigation Item
 class NavItem {
   final String label;
-  final String icon; // SVG path
+  final String icon;
   final String route;
 
   NavItem({

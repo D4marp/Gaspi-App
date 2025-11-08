@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/dialog_helper.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
+import '../../../home/presentation/widgets/role_based_bottom_navigation.dart';
 import '../../domain/entities/delivery_order.dart';
 import '../providers/do_mock_provider.dart'; // Using mock data for UI slicing
 
@@ -47,6 +50,9 @@ class _DeliveryOrderPageState extends ConsumerState<DeliveryOrderPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(currentUserProvider);
+    final userRole = user?.role.value ?? 'production';
+    final currentRoute = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
     final deliveryOrders = _getFilteredOrders();
 
     return Scaffold(
@@ -62,95 +68,111 @@ class _DeliveryOrderPageState extends ConsumerState<DeliveryOrderPage> {
           ),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          // Filter & Search
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: Column(
-              children: [
-                // Search
-                TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Cari DO Number atau Customer...',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: _searchController.text.isNotEmpty
-                        ? IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () {
-                              setState(() {
-                                _searchController.clear();
-                                _searchQuery = null;
-                              });
-                            },
-                          )
-                        : null,
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _searchQuery = value.isEmpty ? null : value;
-                    });
-                  },
-                ),
-                const SizedBox(height: 12),
-
-                // Status Filter
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _buildFilterChip('Semua', null),
-                      const SizedBox(width: 8),
-                      _buildFilterChip('Menunggu', 'pending'),
-                      const SizedBox(width: 8),
-                      _buildFilterChip('Dalam Pengiriman', 'on_delivery'),
-                      const SizedBox(width: 8),
-                      _buildFilterChip('Selesai', 'completed'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // List
-          Expanded(
-            child: deliveryOrders.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.inbox_outlined,
-                          size: 64,
-                          color: AppTheme.textHintColor,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'Tidak ada delivery order',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppTheme.textSecondaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : RefreshIndicator(
-                    onRefresh: () async {
-                      setState(() {}); // Trigger rebuild
-                      SnackBarHelper.showSuccess(context, 'Data di-refresh');
-                    },
-                    child: ListView.builder(
-                      itemCount: deliveryOrders.length,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      itemBuilder: (context, index) {
-                        final deliveryOrder = deliveryOrders[index];
-                        return _DeliveryOrderCard(deliveryOrder: deliveryOrder);
+          // Main Content
+          Column(
+            children: [
+              // Filter & Search
+              Container(
+                padding: const EdgeInsets.all(16),
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    // Search
+                    TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Cari DO Number atau Customer...',
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: _searchController.text.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () {
+                                  setState(() {
+                                    _searchController.clear();
+                                    _searchQuery = null;
+                                  });
+                                },
+                              )
+                            : null,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _searchQuery = value.isEmpty ? null : value;
+                        });
                       },
                     ),
-                  ),
+                    const SizedBox(height: 12),
+
+                    // Status Filter
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          _buildFilterChip('Semua', null),
+                          const SizedBox(width: 8),
+                          _buildFilterChip('Menunggu', 'pending'),
+                          const SizedBox(width: 8),
+                          _buildFilterChip('Dalam Pengiriman', 'on_delivery'),
+                          const SizedBox(width: 8),
+                          _buildFilterChip('Selesai', 'completed'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // List
+              Expanded(
+                child: deliveryOrders.isEmpty
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.inbox_outlined,
+                              size: 64,
+                              color: AppTheme.textHintColor,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Tidak ada delivery order',
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: AppTheme.textSecondaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : RefreshIndicator(
+                        onRefresh: () async {
+                          setState(() {}); // Trigger rebuild
+                          SnackBarHelper.showSuccess(context, 'Data di-refresh');
+                        },
+                        child: ListView.builder(
+                          itemCount: deliveryOrders.length,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          itemBuilder: (context, index) {
+                            final deliveryOrder = deliveryOrders[index];
+                            return _DeliveryOrderCard(deliveryOrder: deliveryOrder);
+                          },
+                        ),
+                      ),
+              ),
+            ],
+          ),
+
+          // Bottom Navigation
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: RoleBasedBottomNavigation(
+              currentRoute: currentRoute,
+              userRole: userRole,
+            ),
           ),
         ],
       ),
@@ -168,11 +190,11 @@ class _DeliveryOrderPageState extends ConsumerState<DeliveryOrderPage> {
           _selectedStatus = selected ? status : null;
         });
       },
-      backgroundColor: AppTheme.backgroundColor,
-      selectedColor: AppTheme.primaryColor.withOpacity(0.2),
-      checkmarkColor: AppTheme.primaryColor,
+      backgroundColor: Colors.grey[200],
+      selectedColor: const Color(0xFF007EFF).withOpacity(0.2),
+      checkmarkColor: const Color(0xFF007EFF),
       labelStyle: TextStyle(
-        color: isSelected ? AppTheme.primaryColor : AppTheme.textSecondaryColor,
+        color: isSelected ? const Color(0xFF007EFF) : Colors.grey[600],
         fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
       ),
     );

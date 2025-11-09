@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/gen/assets.gen.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
-import '../../../home/presentation/widgets/role_based_bottom_navigation.dart';
+import '../../../home/presentation/widgets/navigation_wrapper.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -12,43 +12,23 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider);
-    final userRole = user?.role.value ?? 'production';
-    final currentRoute = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // Main Content
-          SingleChildScrollView(
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Profile Header
-                    _buildProfileHeader(user),
-                    const SizedBox(height: 32),
+    return NavigationWrapper(
+      title: 'My Account',
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile Header
+            _buildProfileHeader(user),
+            const SizedBox(height: 32),
 
-                    // Profile Menu Items
-                    _buildMenuItems(context),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // Bottom Navigation
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: RoleBasedBottomNavigation(
-              currentRoute: currentRoute,
-              userRole: userRole,
-            ),
-          ),
-        ],
+            // Profile Menu Items
+            _buildMenuItems(context),
+            const SizedBox(height: 80), // Bottom padding for nav
+          ],
+        ),
       ),
     );
   }
@@ -57,7 +37,6 @@ class ProfilePage extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
         Center(
           child: Container(
             width: 80,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/gen/assets.gen.dart';
+import 'bottom_nav_clipper.dart';
 
 /// Bottom Navigation Menu berdasarkan Role - Full Width dengan QR Center
 class RoleBasedBottomNavigation extends StatelessWidget {
@@ -108,101 +109,101 @@ class RoleBasedBottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     final navItems = _getNavItems();
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    
+    // Responsive sizes based on screen width
+    final navHeight = screenHeight * 0.11; // 11% of screen height
+    final qrSize = screenWidth * 0.25; // 28% of screen width (lebih besar)
+    final iconSize = screenWidth * 0.060; // 6.5% of screen width
+    final fontSize = screenWidth * 0.023; // 2.7% of screen width
 
-    return Container(
-      width: screenWidth,
-      height: 96,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0x19000000),
-            blurRadius: 78,
-            offset: const Offset(0, -11),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: Stack(
-        children: [
-          // Background Navigation Bar - Full Width
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            child: Container(
-              width: screenWidth,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              decoration: const ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                shadows: [
-                  BoxShadow(
-                    color: Color(0x19000000),
-                    blurRadius: 47,
-                    offset: Offset(0, -11),
-                    spreadRadius: 0,
-                  )
-                ],
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        // Navigation bar dengan notch
+        ClipPath(
+          clipper: BottomNavClipper(),
+          child: Container(
+            width: screenWidth,
+            height: navHeight,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.08, // 8% of screen width (lebih besar)
+                vertical: 16,
               ),
               child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: List.generate(
-                  navItems.length,
-                  (index) => _buildNavItem(
-                    context,
-                    navItems[index],
-                    isActive: currentRoute == navItems[index].route,
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          // Floating QR Button (Centered at top)
-          Positioned(
-            left: 0,
-            right: 0,
-            top: -15,
-            child: Center(
-              child: GestureDetector(
-                onTap: () => context.go('/qr-scan'),
-                child: Container(
-                  width: 66,
-                  height: 66,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF007EFF),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF007EFF).withOpacity(0.35),
-                        blurRadius: 22,
-                        offset: const Offset(0, 0),
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: SvgPicture.asset(
-                    Assets.icons.qr,
-                    width: 32,
-                    height: 32,
-                    colorFilter: const ColorFilter.mode(
-                      Colors.white,
-                      BlendMode.srcIn,
+                children: [
+                  // Left items
+                  if (navItems.isNotEmpty)
+                    _buildNavItem(
+                      context,
+                      navItems[0],
+                      isActive: currentRoute == navItems[0].route,
+                      iconSize: iconSize,
+                      fontSize: fontSize,
                     ),
-                  ),
-                ),
+                  if (navItems.length > 1)
+                    _buildNavItem(
+                      context,
+                      navItems[1],
+                      isActive: currentRoute == navItems[1].route,
+                      iconSize: iconSize,
+                      fontSize: fontSize,
+                    ),
+                  
+                  // Space for QR button
+                  SizedBox(width: qrSize),
+                  
+                  // Right items
+                  if (navItems.length > 2)
+                    _buildNavItem(
+                      context,
+                      navItems[2],
+                      isActive: currentRoute == navItems[2].route,
+                      iconSize: iconSize,
+                      fontSize: fontSize,
+                    ),
+                  if (navItems.length > 3)
+                    _buildNavItem(
+                      context,
+                      navItems[3],
+                      isActive: currentRoute == navItems[3].route,
+                      iconSize: iconSize,
+                      fontSize: fontSize,
+                    ),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        
+        // Floating QR Button - Responsive size
+        Positioned(
+          left: 0,
+          right: 0,
+          top: -(qrSize * 0.6), // Position based on QR size
+          child: Center(
+            child: GestureDetector(
+              onTap: () => context.go('/qr-scan'),
+              child: SvgPicture.asset(
+                Assets.icons.qr,
+                width: qrSize,
+                height: qrSize,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -210,30 +211,34 @@ class RoleBasedBottomNavigation extends StatelessWidget {
     BuildContext context,
     NavItem item, {
     required bool isActive,
+    required double iconSize,
+    required double fontSize,
   }) {
     return GestureDetector(
       onTap: () => context.go(item.route),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
             item.icon,
-            width: 24,
-            height: 24,
+            width: iconSize,
+            height: iconSize,
             colorFilter: ColorFilter.mode(
               isActive ? const Color(0xFF007EFF) : const Color(0xCC777985),
               BlendMode.srcIn,
             ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: fontSize * 0.4),
           Text(
             item.label,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: isActive ? const Color(0xFF007EFF) : const Color(0xCC777985),
-              fontSize: 10,
+              fontSize: fontSize,
               fontFamily: 'Nunito Sans',
-              fontWeight: FontWeight.w600,
+              fontWeight: isActive ? FontWeight.w700 : FontWeight.w600,
               height: 1.20,
             ),
           ),

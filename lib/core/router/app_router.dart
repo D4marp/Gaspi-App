@@ -9,6 +9,9 @@ import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/delivery_order/presentation/pages/delivery_order_page.dart';
 import '../../features/home/presentation/pages/home_admin_page.dart';
 import '../../features/home/presentation/pages/partnership_opportunity_page.dart';
+import '../../features/home/presentation/widgets/navigation_wrapper.dart';
+import '../../features/maintenance/presentation/pages/maintenance_page.dart';
+import '../../features/profile/presentation/pages/profile_page.dart';
 import '../theme/app_theme.dart';
 
 /// Router Provider dengan RBAC
@@ -109,10 +112,44 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const PartnershipOpportunityPage(),
       ),
 
-      // Maintenance Routes (example)
+      // Maintenance Routes
       GoRoute(
         path: '/maintenance',
         builder: (context, state) => const MaintenancePage(),
+      ),
+
+      GoRoute(
+        path: '/maintenance-tasks',
+        builder: (context, state) => const MaintenancePage(),
+      ),
+
+      GoRoute(
+        path: '/maintenance-schedule',
+        builder: (context, state) => const MaintenancePage(),
+      ),
+
+      // Assets Registration Route
+      GoRoute(
+        path: '/assets-registration',
+        builder: (context, state) => const AssetsRegistrationPage(),
+      ),
+
+      // QR Scan Route
+      GoRoute(
+        path: '/qr-scan',
+        builder: (context, state) => const QRScanPage(),
+      ),
+
+      // Account/Profile Route
+      GoRoute(
+        path: '/account',
+        builder: (context, state) => const ProfilePage(),
+      ),
+
+      // Supervisor Report Route
+      GoRoute(
+        path: '/supervisor-report',
+        builder: (context, state) => const SupervisorReportPage(),
       ),
 
       // Users Management (admin only)
@@ -130,36 +167,108 @@ final routerProvider = Provider<GoRouter>((ref) {
   );
 });
 
-/// Placeholder pages
-class MaintenancePage extends StatelessWidget {
-  const MaintenancePage({super.key});
+/// Placeholder pages dengan NavigationWrapper
+class AssetsRegistrationPage extends ConsumerWidget {
+  const AssetsRegistrationPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Maintenance')),
-      body: const Center(child: Text('Maintenance Page - Coming Soon')),
+  Widget build(BuildContext context, WidgetRef ref) {
+    return NavigationWrapper(
+      title: 'Assets Registration',
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.inventory_outlined, size: 48, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              'Assets Registration - Coming Soon',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class UsersPage extends StatelessWidget {
+class QRScanPage extends ConsumerWidget {
+  const QRScanPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return NavigationWrapper(
+      title: 'QR Scan',
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.qr_code_2_outlined, size: 48, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              'QR Scan - Coming Soon',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SupervisorReportPage extends ConsumerWidget {
+  const SupervisorReportPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return NavigationWrapper(
+      title: 'Supervisor Report',
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.assessment_outlined, size: 48, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              'Supervisor Report - Coming Soon',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class UsersPage extends ConsumerWidget {
   const UsersPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Users Management')),
-      body: const Center(child: Text('Users Page - Coming Soon')),
+  Widget build(BuildContext context, WidgetRef ref) {
+    return NavigationWrapper(
+      title: 'Users Management',
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.people_outline, size: 48, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              'Users Management - Coming Soon',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class UnauthorizedPage extends StatelessWidget {
+class UnauthorizedPage extends ConsumerWidget {
   const UnauthorizedPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Akses Ditolak')),
       body: Center(

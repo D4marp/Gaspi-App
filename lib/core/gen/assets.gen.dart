@@ -23,6 +23,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/add.svg
   String get add => 'assets/icons/add.svg';
 
+  /// File path: assets/icons/award.svg
+  String get award => 'assets/icons/award.svg';
+
   /// File path: assets/icons/box.svg
   String get box => 'assets/icons/box.svg';
 
@@ -50,8 +53,8 @@ class $AssetsIconsGen {
   /// File path: assets/icons/setting-2.svg
   String get setting2 => 'assets/icons/setting-2.svg';
 
-  /// File path: assets/icons/shield-tick copy.svg
-  String get shieldTickCopy => 'assets/icons/shield-tick copy.svg';
+  /// File path: assets/icons/shield-tick bold.svg
+  String get shieldTickBold => 'assets/icons/shield-tick bold.svg';
 
   /// File path: assets/icons/shield-tick.svg
   String get shieldTick => 'assets/icons/shield-tick.svg';
@@ -76,6 +79,7 @@ class $AssetsIconsGen {
     qr,
     readme,
     add,
+    award,
     box,
     convert3dCube,
     documentText,
@@ -85,7 +89,7 @@ class $AssetsIconsGen {
     people,
     profileCircle,
     setting2,
-    shieldTickCopy,
+    shieldTickBold,
     shieldTick,
     shop,
     stickynote,
@@ -100,6 +104,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/README.md
   String get readme => 'assets/images/README.md';
+
+  /// File path: assets/images/navigation.svg
+  String get navigation => 'assets/images/navigation.svg';
 
   /// File path: assets/images/onboarding_1.png
   AssetGenImage get onboarding1 =>
@@ -120,6 +127,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
     readme,
+    navigation,
     onboarding1,
     onboarding2,
     onboarding3,

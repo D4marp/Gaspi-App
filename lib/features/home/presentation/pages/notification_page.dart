@@ -228,7 +228,7 @@ class NotificationPage extends ConsumerWidget {
           padding: EdgeInsets.symmetric(horizontal: 32),
           child: Container(
             height: 1,
-            color: const Color(0xFFE8E8E8),
+            color: const Color(0xFFF0F0F0),
           ),
         ),
       ],

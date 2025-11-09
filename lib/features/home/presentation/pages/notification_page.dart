@@ -18,7 +18,7 @@ class NotificationPage extends ConsumerWidget {
     final navHeight = screenHeight * 0.11;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      // backgroundColor: const Color(0xFFF5F5F5),
       body: Stack(
         children: [
           // Main Content - Scrollable
@@ -70,12 +70,6 @@ class NotificationPage extends ConsumerWidget {
               ),
               decoration: const BoxDecoration(
                 color: Colors.white,
-                border: Border(
-                  bottom: BorderSide(
-                    color: Color(0xFFE8E8E8),
-                    width: 1,
-                  ),
-                ),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -137,104 +131,107 @@ class NotificationPage extends ConsumerWidget {
     double screenWidth,
     double screenHeight,
   ) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: screenWidth * 0.08,
-        vertical: screenHeight * 0.02,
-      ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Color(0xFFE8E8E8),
-            width: 1,
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.08,
+            vertical: screenHeight * 0.02,
           ),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Blue dot indicator
-          Padding(
-            padding: EdgeInsets.only(
-              top: screenHeight * 0.003,
-            ),
-            child: Container(
-              width: screenWidth * 0.013,
-              height: screenWidth * 0.013,
-              decoration: const ShapeDecoration(
-                color: Color(0xFF007EFF),
-                shape: OvalBorder(),
-              ),
-            ),
-          ),
-          SizedBox(width: screenWidth * 0.03),
-          // Content
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Title with bold and regular text
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: itemName,
-                        style: TextStyle(
-                          color: const Color(0xFF393D4E),
-                          fontSize: screenWidth * 0.035,
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w600,
-                          height: 1.40,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ' requested to maintenance',
-                        style: TextStyle(
-                          color: const Color(0xFF393D4E),
-                          fontSize: screenWidth * 0.035,
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w400,
-                          height: 1.40,
-                        ),
-                      ),
-                    ],
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Blue dot indicator
+              Padding(
+                padding: EdgeInsets.only(
+                  top: screenHeight * 0.003,
+                ),
+                child: Container(
+                  width: screenWidth * 0.013,
+                  height: screenWidth * 0.013,
+                  decoration: const ShapeDecoration(
+                    color: Color(0xFF007EFF),
+                    shape: OvalBorder(),
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.008),
-                // Date
-                Row(
+              ),
+              SizedBox(width: screenWidth * 0.03),
+              // Content
+              Expanded(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.calendar_today,
-                      size: screenWidth * 0.03,
-                      color: const Color(0xFF393D4E),
-                    ),
-                    SizedBox(width: screenWidth * 0.008),
-                    Text(
-                      date,
-                      style: TextStyle(
-                        color: const Color(0xFF393D4E),
-                        fontSize: screenWidth * 0.03,
-                        fontFamily: 'Nunito Sans',
-                        fontWeight: FontWeight.w600,
-                        height: 1.20,
+                    // Title with bold and regular text
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: itemName,
+                            style: TextStyle(
+                              color: const Color(0xFF393D4E),
+                              fontSize: screenWidth * 0.035,
+                              fontFamily: 'Nunito Sans',
+                              fontWeight: FontWeight.w600,
+                              height: 1.40,
+                            ),
+                          ),
+                          TextSpan(
+                            text: ' requested to maintenance',
+                            style: TextStyle(
+                              color: const Color(0xFF393D4E),
+                              fontSize: screenWidth * 0.035,
+                              fontFamily: 'Nunito Sans',
+                              fontWeight: FontWeight.w400,
+                              height: 1.40,
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+                    SizedBox(height: screenHeight * 0.008),
+                    // Date
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.calendar_today,
+                          size: screenWidth * 0.03,
+                          color: const Color(0xFF393D4E),
+                        ),
+                        SizedBox(width: screenWidth * 0.008),
+                        Text(
+                          date,
+                          style: TextStyle(
+                            color: const Color(0xFF393D4E),
+                            fontSize: screenWidth * 0.03,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w600,
+                            height: 1.20,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        // Divider line dengan padding
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32),
+          child: Container(
+            height: 1,
+            color: const Color(0xFFE8E8E8),
+          ),
+        ),
+      ],
     );
   }
 }

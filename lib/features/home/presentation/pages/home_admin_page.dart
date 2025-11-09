@@ -73,31 +73,33 @@ class HomeAdminPage extends ConsumerWidget {
                           ],
                         ),
                         // Right: Notification
-                        Container(
-                          width: 38,
-                          height: 38,
-                          padding: const EdgeInsets.all(10),
-                          decoration: ShapeDecoration(
-                            color: const Color(0x260F0F0F),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+                        GestureDetector(
+                          onTap: () => context.push('/notification'),
+                          child: Container(
+                            width: 38,
+                            height: 38,
+                            padding: const EdgeInsets.all(10),
+                            decoration: ShapeDecoration(
+                              color: const Color(0x260F0F0F),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
                             ),
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 3,
-                                top: 3,
-                                child: Container(
-                                  width: 5,
-                                  height: 5,
-                                  decoration: ShapeDecoration(
-                                    color: const Color(0xFFE84848),
-                                    shape: OvalBorder(
-                                      side: const BorderSide(
-                                        width: 1,
-                                        color: Color(0xFF224AA3),
-                                      ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: 3,
+                                  top: 3,
+                                  child: Container(
+                                    width: 5,
+                                    height: 5,
+                                    decoration: ShapeDecoration(
+                                      color: const Color(0xFFE84848),
+                                      shape: OvalBorder(
+                                        side: const BorderSide(
+                                          width: 1,
+                                          color: Color(0xFF224AA3),
+                                        ),
                                     ),
                                   ),
                                 ),
@@ -108,6 +110,7 @@ class HomeAdminPage extends ConsumerWidget {
                                 size: 18,
                               ),
                             ],
+                          ),
                           ),
                         ),
                       ],
@@ -248,7 +251,7 @@ class HomeAdminPage extends ConsumerWidget {
                 const SizedBox(width: 39),
                 // Assets Stats
                 _buildStatItem(
-                  icon: Assets.icons.shieldTick,
+                  icon: Assets.icons.mdiGasCylinder,
                   number: '+128',
                   label: 'Assets',
                 ),

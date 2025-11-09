@@ -9,6 +9,7 @@ import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/delivery_order/presentation/pages/delivery_order_page.dart';
 import '../../features/home/presentation/pages/home_admin_page.dart';
 import '../../features/home/presentation/pages/partnership_opportunity_page.dart';
+import '../../features/home/presentation/pages/notification_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
@@ -144,6 +145,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/account',
         builder: (context, state) => const ProfilePage(),
+      ),
+
+      // Notification Route
+      GoRoute(
+        path: '/notification',
+        builder: (context, state) => const NotificationPage(),
       ),
 
       // Supervisor Report Route

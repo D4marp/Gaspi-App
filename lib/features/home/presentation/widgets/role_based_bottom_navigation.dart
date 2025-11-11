@@ -192,7 +192,7 @@ class RoleBasedBottomNavigation extends StatelessWidget {
         Positioned(
           left: 0,
           right: 0,
-          top: -(qrSize * 0.4), // Reduced from 0.6 to 0.4 - not too high
+          top: -(qrSize * 0.8), // Reduced from 0.6 to 0.4 - not too high
           child: Center(
             child: Material(
               color: Colors.transparent,

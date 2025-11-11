@@ -14,6 +14,7 @@ import '../../features/home/presentation/pages/products/products_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/qr_scanner/presentation/pages/qr_scan_page.dart';
 import '../theme/app_theme.dart';
 
 /// Router Provider dengan RBAC
@@ -145,7 +146,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       // QR Scan Route
       GoRoute(
         path: '/qr-scan',
-        builder: (context, state) => const QRScanPage(),
+        builder: (context, state) => const QrScanPage(),
       ),
 
       // Account/Profile Route
@@ -197,30 +198,6 @@ class AssetsRegistrationPage extends ConsumerWidget {
             const SizedBox(height: 16),
             Text(
               'Assets Registration - Coming Soon',
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class QRScanPage extends ConsumerWidget {
-  const QRScanPage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return NavigationWrapper(
-      title: 'QR Scan',
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.qr_code_2_outlined, size: 48, color: Colors.grey[400]),
-            const SizedBox(height: 16),
-            Text(
-              'QR Scan - Coming Soon',
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
           ],

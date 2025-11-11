@@ -245,8 +245,8 @@ class AddProductPage extends ConsumerWidget {
             children: [
               TextSpan(
                 text: label,
-                style: TextStyle(
-                  color: const Color(0xFF101828),
+                style: const TextStyle(
+                  color: Color(0xFF101828),
                   fontSize: 14,
                   fontFamily: 'Nunito Sans',
                   fontWeight: FontWeight.w400,
@@ -255,10 +255,10 @@ class AddProductPage extends ConsumerWidget {
                 ),
               ),
               if (isRequired)
-                TextSpan(
+                const TextSpan(
                   text: ' *',
                   style: TextStyle(
-                    color: const Color(0xFFF1003C),
+                    color: Color(0xFFF1003C),
                     fontSize: 14,
                     fontFamily: 'Nunito Sans',
                     fontWeight: FontWeight.w400,
@@ -269,42 +269,41 @@ class AddProductPage extends ConsumerWidget {
             ],
           ),
         ),
-        SizedBox(height: screenHeight * 0.012),
+        SizedBox(height: screenHeight * 0.008),
         Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
             horizontal: screenWidth * 0.04,
-            vertical: screenHeight * 0.01,
+            vertical: screenHeight * 0.008,
           ),
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
               side: const BorderSide(
-                width: 1.5,
+                width: 1,
                 color: Color(0xFFEDEDED),
               ),
-              borderRadius: BorderRadius.circular(32),
+              borderRadius: BorderRadius.circular(8),
             ),
-            shadows: [
-              BoxShadow(
-                color: const Color(0x0A000000),
-                blurRadius: 71,
-                offset: const Offset(0, 0),
-                spreadRadius: 0,
-              ),
-            ],
           ),
           child: TextField(
+            style: const TextStyle(
+              color: Color(0xFF353535),
+              fontSize: 14,
+              fontFamily: 'Nunito Sans',
+              fontWeight: FontWeight.w400,
+            ),
             decoration: InputDecoration(
               hintText: placeholder,
-              hintStyle: TextStyle(
-                color: const Color(0xFF9C9C9C),
-                fontSize: 12,
+              hintStyle: const TextStyle(
+                color: Color(0xFF9C9C9C),
+                fontSize: 14,
                 fontFamily: 'Nunito Sans',
                 fontWeight: FontWeight.w400,
-                letterSpacing: -0.12,
               ),
               border: InputBorder.none,
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
             ),
           ),
         ),
@@ -329,8 +328,8 @@ class AddProductPage extends ConsumerWidget {
             children: [
               TextSpan(
                 text: label,
-                style: TextStyle(
-                  color: const Color(0xFF353535),
+                style: const TextStyle(
+                  color: Color(0xFF353535),
                   fontSize: 14,
                   fontFamily: 'Nunito Sans',
                   fontWeight: FontWeight.w600,
@@ -339,10 +338,10 @@ class AddProductPage extends ConsumerWidget {
                 ),
               ),
               if (isRequired)
-                TextSpan(
+                const TextSpan(
                   text: ' *',
                   style: TextStyle(
-                    color: const Color(0xFFD04B22),
+                    color: Color(0xFFD04B22),
                     fontSize: 14,
                     fontFamily: 'Nunito Sans',
                     fontWeight: FontWeight.w600,
@@ -353,30 +352,22 @@ class AddProductPage extends ConsumerWidget {
             ],
           ),
         ),
-        SizedBox(height: screenHeight * 0.012),
+        SizedBox(height: screenHeight * 0.008),
         Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
             horizontal: screenWidth * 0.04,
-            vertical: screenHeight * 0.01,
+            vertical: screenHeight * 0.008,
           ),
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
               side: const BorderSide(
-                width: 1.5,
+                width: 1,
                 color: Color(0xFFEDEDED),
               ),
-              borderRadius: BorderRadius.circular(32),
+              borderRadius: BorderRadius.circular(8),
             ),
-            shadows: [
-              BoxShadow(
-                color: const Color(0x0A000000),
-                blurRadius: 71,
-                offset: const Offset(0, 0),
-                spreadRadius: 0,
-              ),
-            ],
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -385,19 +376,17 @@ class AddProductPage extends ConsumerWidget {
             children: [
               Text(
                 placeholder,
-                style: TextStyle(
-                  color: const Color(0xFF68686D),
-                  fontSize: 12,
+                style: const TextStyle(
+                  color: Color(0xFF68686D),
+                  fontSize: 14,
                   fontFamily: 'Nunito Sans',
                   fontWeight: FontWeight.w400,
-                  height: 1.40,
-                  letterSpacing: -0.24,
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.expand_more,
-                size: screenWidth * 0.035,
-                color: const Color(0xFF68686D),
+                size: 16,
+                color: Color(0xFF68686D),
               ),
             ],
           ),
@@ -423,8 +412,8 @@ class AddProductPage extends ConsumerWidget {
             children: [
               TextSpan(
                 text: label,
-                style: TextStyle(
-                  color: const Color(0xFF353535),
+                style: const TextStyle(
+                  color: Color(0xFF353535),
                   fontSize: 14,
                   fontFamily: 'Nunito Sans',
                   fontWeight: FontWeight.w600,
@@ -433,10 +422,10 @@ class AddProductPage extends ConsumerWidget {
                 ),
               ),
               if (isRequired)
-                TextSpan(
+                const TextSpan(
                   text: ' *',
                   style: TextStyle(
-                    color: const Color(0xFFD04B22),
+                    color: Color(0xFFD04B22),
                     fontSize: 14,
                     fontFamily: 'Nunito Sans',
                     fontWeight: FontWeight.w600,
@@ -447,13 +436,13 @@ class AddProductPage extends ConsumerWidget {
             ],
           ),
         ),
-        SizedBox(height: screenHeight * 0.012),
+        SizedBox(height: screenHeight * 0.008),
         Container(
           width: double.infinity,
-          height: screenHeight * 0.112,
+          height: screenHeight * 0.08,
           padding: EdgeInsets.symmetric(
             horizontal: screenWidth * 0.04,
-            vertical: screenHeight * 0.012,
+            vertical: screenHeight * 0.008,
           ),
           decoration: ShapeDecoration(
             color: Colors.white,
@@ -462,21 +451,28 @@ class AddProductPage extends ConsumerWidget {
                 width: 1,
                 color: Color(0xFFF0F0F0),
               ),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
           child: TextField(
-            maxLines: 4,
+            maxLines: null,
+            style: const TextStyle(
+              color: Color(0xFF353535),
+              fontSize: 14,
+              fontFamily: 'Nunito Sans',
+              fontWeight: FontWeight.w400,
+            ),
             decoration: InputDecoration(
               hintText: placeholder,
-              hintStyle: TextStyle(
-                color: const Color(0xFF9C9C9C),
-                fontSize: 12,
+              hintStyle: const TextStyle(
+                color: Color(0xFF9C9C9C),
+                fontSize: 14,
                 fontFamily: 'Nunito Sans',
                 fontWeight: FontWeight.w400,
-                letterSpacing: -0.12,
               ),
               border: InputBorder.none,
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
             ),
           ),
         ),

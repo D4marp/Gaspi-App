@@ -246,7 +246,7 @@ class EditProductPage extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 12,
+      spacing: 8,
       children: [
         Text.rich(
           TextSpan(
@@ -279,29 +279,19 @@ class EditProductPage extends ConsumerWidget {
         ),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.only(
-            top: 10,
-            left: 16,
-            right: 24,
-            bottom: 10,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 8,
           ),
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
               side: const BorderSide(
-                width: 1.50,
+                width: 1,
                 color: Color(0xFFEDEDED),
               ),
-              borderRadius: BorderRadius.circular(32),
+              borderRadius: BorderRadius.circular(8),
             ),
-            shadows: [
-              BoxShadow(
-                color: const Color(0x0A000000),
-                blurRadius: 71,
-                offset: const Offset(0, 0),
-                spreadRadius: 0,
-              ),
-            ],
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -309,30 +299,22 @@ class EditProductPage extends ConsumerWidget {
                 isDropdown ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                placeholder,
-                style: const TextStyle(
-                  color: Color(0xFF9C9C9C),
-                  fontSize: 12,
-                  fontFamily: 'Nunito Sans',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: -0.12,
+              Expanded(
+                child: Text(
+                  placeholder,
+                  style: const TextStyle(
+                    color: Color(0xFF9C9C9C),
+                    fontSize: 14,
+                    fontFamily: 'Nunito Sans',
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
               if (isDropdown)
-                Container(
-                  width: 14,
-                  height: 14,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.expand_more,
-                    size: 14,
-                    color: Color(0xFF68686D),
-                  ),
+                const Icon(
+                  Icons.expand_more,
+                  size: 16,
+                  color: Color(0xFF68686D),
                 ),
             ],
           ),
@@ -346,7 +328,7 @@ class EditProductPage extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 12,
+      spacing: 8,
       children: [
         Text.rich(
           TextSpan(
@@ -391,29 +373,19 @@ class EditProductPage extends ConsumerWidget {
           },
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 24,
-              right: 16,
-              bottom: 10,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
             ),
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
                 side: const BorderSide(
-                  width: 1.50,
+                  width: 1,
                   color: Color(0xFFEDEDED),
                 ),
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: BorderRadius.circular(8),
               ),
-              shadows: [
-                BoxShadow(
-                  color: const Color(0x0A000000),
-                  blurRadius: 71,
-                  offset: const Offset(0, 0),
-                  spreadRadius: 0,
-                ),
-              ],
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -424,26 +396,15 @@ class EditProductPage extends ConsumerWidget {
                   'Select Category',
                   style: TextStyle(
                     color: Color(0xFF68686D),
-                    fontSize: 12,
+                    fontSize: 14,
                     fontFamily: 'Nunito Sans',
                     fontWeight: FontWeight.w400,
-                    height: 1.40,
-                    letterSpacing: -0.24,
                   ),
                 ),
-                Container(
-                  width: 14,
-                  height: 14,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.expand_more,
-                    size: 14,
-                    color: Color(0xFF68686D),
-                  ),
+                const Icon(
+                  Icons.expand_more,
+                  size: 16,
+                  color: Color(0xFF68686D),
                 ),
               ],
             ),
@@ -458,7 +419,7 @@ class EditProductPage extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 12,
+      spacing: 8,
       children: [
         Text.rich(
           TextSpan(
@@ -503,29 +464,19 @@ class EditProductPage extends ConsumerWidget {
           },
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 24,
-              right: 16,
-              bottom: 10,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
             ),
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
                 side: const BorderSide(
-                  width: 1.50,
+                  width: 1,
                   color: Color(0xFFEDEDED),
                 ),
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: BorderRadius.circular(8),
               ),
-              shadows: [
-                BoxShadow(
-                  color: const Color(0x0A000000),
-                  blurRadius: 71,
-                  offset: const Offset(0, 0),
-                  spreadRadius: 0,
-                ),
-              ],
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -536,26 +487,15 @@ class EditProductPage extends ConsumerWidget {
                   'Select Package',
                   style: TextStyle(
                     color: Color(0xFF68686D),
-                    fontSize: 12,
+                    fontSize: 14,
                     fontFamily: 'Nunito Sans',
                     fontWeight: FontWeight.w400,
-                    height: 1.40,
-                    letterSpacing: -0.24,
                   ),
                 ),
-                Container(
-                  width: 14,
-                  height: 14,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.expand_more,
-                    size: 14,
-                    color: Color(0xFF68686D),
-                  ),
+                const Icon(
+                  Icons.expand_more,
+                  size: 16,
+                  color: Color(0xFF68686D),
                 ),
               ],
             ),
@@ -602,12 +542,10 @@ class EditProductPage extends ConsumerWidget {
         ),
         Container(
           width: double.infinity,
-          height: 112,
-          padding: const EdgeInsets.only(
-            top: 12,
-            left: 24,
-            right: 110,
-            bottom: 12,
+          height: 80,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 8,
           ),
           decoration: ShapeDecoration(
             color: Colors.white,
@@ -616,28 +554,28 @@ class EditProductPage extends ConsumerWidget {
                 width: 1,
                 color: Color(0xFFF0F0F0),
               ),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
           child: const TextField(
             maxLines: null,
+            style: TextStyle(
+              color: Color(0xFF353535),
+              fontSize: 14,
+              fontFamily: 'Nunito Sans',
+              fontWeight: FontWeight.w400,
+            ),
             decoration: InputDecoration(
               hintText: 'Enter description',
               hintStyle: TextStyle(
                 color: Color(0xFF9C9C9C),
-                fontSize: 12,
+                fontSize: 14,
                 fontFamily: 'Nunito Sans',
                 fontWeight: FontWeight.w400,
-                letterSpacing: -0.12,
               ),
               border: InputBorder.none,
-            ),
-            style: TextStyle(
-              color: Color(0xFF353535),
-              fontSize: 12,
-              fontFamily: 'Nunito Sans',
-              fontWeight: FontWeight.w400,
-              letterSpacing: -0.12,
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
             ),
           ),
         ),

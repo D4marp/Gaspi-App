@@ -4,9 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gaspi_app/core/gen/assets.gen.dart';
 import 'package:gaspi_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:gaspi_app/features/home/presentation/widgets/role_based_bottom_navigation.dart';
+import 'package:gaspi_app/features/home/presentation/widgets/category_modal.dart';
+import 'package:gaspi_app/features/home/presentation/widgets/package_modal.dart';
 import 'package:go_router/go_router.dart';
 import 'product_detail_page.dart';
 import 'add_product_page.dart';
+import 'package:gaspi_app/features/home/presentation/pages/notification/notification_page.dart';
 
 class ProductsPage extends ConsumerWidget {
   const ProductsPage({super.key});
@@ -216,40 +219,50 @@ class ProductsPage extends ConsumerWidget {
                         ),
                       ),
                       SizedBox(width: screenWidth * 0.03),
-                      Container(
-                        width: screenHeight * 0.045,
-                        height: screenHeight * 0.045,
-                        padding: EdgeInsets.all(screenWidth * 0.025),
-                        decoration: ShapeDecoration(
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              width: 1,
-                              color: Color(0xFFEDEDED),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationPage(),
                             ),
-                            borderRadius: BorderRadius.circular(300),
+                          );
+                        },
+                        child: Container(
+                          width: screenHeight * 0.045,
+                          height: screenHeight * 0.045,
+                          padding: EdgeInsets.all(screenWidth * 0.025),
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                width: 1,
+                                color: Color(0xFFEDEDED),
+                              ),
+                              borderRadius: BorderRadius.circular(300),
+                            ),
                           ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Icon(
-                              Icons.notifications_none,
-                              size: screenWidth * 0.05,
-                              color: const Color(0xFF393D4E),
-                            ),
-                            Positioned(
-                              right: screenWidth * 0.01,
-                              top: screenHeight * 0.005,
-                              child: Container(
-                                width: screenWidth * 0.025,
-                                height: screenWidth * 0.025,
-                                decoration: const ShapeDecoration(
-                                  color: Color(0xFFE84848),
-                                  shape: OvalBorder(),
+                          child: Stack(
+                            children: [
+                              Icon(
+                                Icons.notifications_none,
+                                size: screenWidth * 0.05,
+                                color: const Color(0xFF393D4E),
+                              ),
+                              Positioned(
+                                right: screenWidth * 0.01,
+                                top: screenHeight * 0.005,
+                                child: Container(
+                                  width: screenWidth * 0.025,
+                                  height: screenWidth * 0.025,
+                                  decoration: const ShapeDecoration(
+                                    color: Color(0xFFE84848),
+                                    shape: OvalBorder(),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -296,88 +309,116 @@ class ProductsPage extends ConsumerWidget {
                         ),
                         SizedBox(width: screenWidth * 0.02),
                         // Product Category Button
-                        Container(
-                          padding: EdgeInsets.only(
-                            top: screenHeight * 0.008,
-                            left: screenWidth * 0.06,
-                            right: screenWidth * 0.04,
-                            bottom: screenHeight * 0.008,
-                          ),
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                width: 1,
-                                color: Color(0xFFDCDBDB),
-                              ),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Product Category',
-                                style: TextStyle(
-                                  color: const Color(0xCC777985),
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito Sans',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.40,
-                                  letterSpacing: -0.24,
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
                                 ),
                               ),
-                              SizedBox(width: screenWidth * 0.02),
-                              Icon(
-                                Icons.expand_more,
-                                size: screenWidth * 0.03,
-                                color: const Color(0xCC777985),
+                              builder: (context) => const CategoryModal(),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: screenHeight * 0.008,
+                              left: screenWidth * 0.06,
+                              right: screenWidth * 0.04,
+                              bottom: screenHeight * 0.008,
+                            ),
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  width: 1,
+                                  color: Color(0xFFDCDBDB),
+                                ),
+                                borderRadius: BorderRadius.circular(30),
                               ),
-                            ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Product Category',
+                                  style: TextStyle(
+                                    color: const Color(0xCC777985),
+                                    fontSize: 12,
+                                    fontFamily: 'Nunito Sans',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.40,
+                                    letterSpacing: -0.24,
+                                  ),
+                                ),
+                                SizedBox(width: screenWidth * 0.02),
+                                Icon(
+                                  Icons.expand_more,
+                                  size: screenWidth * 0.03,
+                                  color: const Color(0xCC777985),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(width: screenWidth * 0.02),
                         // Package Button
-                        Container(
-                          padding: EdgeInsets.only(
-                            top: screenHeight * 0.008,
-                            left: screenWidth * 0.06,
-                            right: screenWidth * 0.04,
-                            bottom: screenHeight * 0.008,
-                          ),
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                width: 1,
-                                color: Color(0xFFDCDBDB),
-                              ),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Package',
-                                style: TextStyle(
-                                  color: const Color(0xCC777985),
-                                  fontSize: 12,
-                                  fontFamily: 'Nunito Sans',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.40,
-                                  letterSpacing: -0.24,
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
                                 ),
                               ),
-                              SizedBox(width: screenWidth * 0.02),
-                              Icon(
-                                Icons.expand_more,
-                                size: screenWidth * 0.03,
-                                color: const Color(0xCC777985),
+                              builder: (context) => const PackageModal(),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: screenHeight * 0.008,
+                              left: screenWidth * 0.06,
+                              right: screenWidth * 0.04,
+                              bottom: screenHeight * 0.008,
+                            ),
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  width: 1,
+                                  color: Color(0xFFDCDBDB),
+                                ),
+                                borderRadius: BorderRadius.circular(30),
                               ),
-                            ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Package',
+                                  style: TextStyle(
+                                    color: const Color(0xCC777985),
+                                    fontSize: 12,
+                                    fontFamily: 'Nunito Sans',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.40,
+                                    letterSpacing: -0.24,
+                                  ),
+                                ),
+                                SizedBox(width: screenWidth * 0.02),
+                                Icon(
+                                  Icons.expand_more,
+                                  size: screenWidth * 0.03,
+                                  color: const Color(0xCC777985),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

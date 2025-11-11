@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/gen/assets.gen.dart';
 import '../../../../auth/presentation/providers/auth_provider.dart';
 import '../../widgets/role_based_bottom_navigation.dart';
+import 'edit_product_page.dart';
 
 class ProductDetailPage extends ConsumerWidget {
   final String productName;
@@ -16,7 +17,7 @@ class ProductDetailPage extends ConsumerWidget {
     required this.productCategory,
   });
 
-  @override
+  @override                       
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider);
     final userRole = user?.role.value ?? 'production';
@@ -56,31 +57,16 @@ class ProductDetailPage extends ConsumerWidget {
                   Container(
                     width: double.infinity,
                     margin: EdgeInsets.only(bottom: screenHeight * 0.02),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          Assets.icons.mdiGasCylinder,
-                          width: screenWidth * 0.06,
-                          height: screenWidth * 0.06,
-                        ),
-                        SizedBox(width: screenWidth * 0.03),
-                        Expanded(
-                          child: Text(
-                            productName,
-                            style: TextStyle(
-                              color: const Color(0xFF101828),
-                              fontSize: 16,
-                              fontFamily: 'Nunito Sans',
-                              fontWeight: FontWeight.w700,
-                              height: 1.20,
-                              letterSpacing: -0.32,
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      productName,
+                      style: TextStyle(
+                        color: const Color(0xFF101828),
+                        fontSize: 18,
+                        fontFamily: 'Nunito Sans',
+                        fontWeight: FontWeight.w700,
+                        height: 1.20,
+                        letterSpacing: -0.36,
+                      ),
                     ),
                   ),
 
@@ -146,20 +132,20 @@ class ProductDetailPage extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 16,
                       children: [
-                        SizedBox(height: screenHeight * 0.02),
+                        SizedBox(height: screenHeight * 0.01),
                         Text(
                           'Item Description',
                           style: TextStyle(
                             color: const Color(0xFF353535),
-                            fontSize: screenWidth * 0.052,
+                            fontSize: 20,
                             fontFamily: 'Nunito Sans',
                             fontWeight: FontWeight.w700,
                             height: 1.20,
                             letterSpacing: -0.40,
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.02),
                         Text(
                           productDetails['description']!,
                           style: TextStyle(
@@ -201,28 +187,28 @@ class ProductDetailPage extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
                         child: Container(
-                          width: screenHeight * 0.038,
-                          height: screenHeight * 0.038,
+                          width: 24,
+                          height: 24,
                           decoration: ShapeDecoration(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.arrow_back,
-                            size: screenWidth * 0.05,
-                            color: const Color(0xFF393D4E),
+                            size: 20,
+                            color: Color(0xFF393D4E),
                           ),
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.04),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           'Inventory Detail',
@@ -236,28 +222,42 @@ class ProductDetailPage extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          // TODO: Navigate to edit product page
-                        },
-                        child: Container(
-                          width: screenHeight * 0.038,
-                          height: screenHeight * 0.038,
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: SvgPicture.asset(
-                            Assets.icons.edit,
-                            width: screenWidth * 0.04,
-                            height: screenWidth * 0.04,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ],
+              ),
+            ),
+          ),
+
+          // Edit Button - Fixed Position (Top Right)
+          Positioned(
+            right: screenWidth * 0.08,
+            top: screenHeight * 0.063,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProductPage(
+                      productName: productName,
+                      productCategory: productCategory,
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                width: 24,
+                height: 24,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: SvgPicture.asset(
+                  Assets.icons.edit,
+                  width: 20,
+                  height: 20,
+                ),
               ),
             ),
           ),

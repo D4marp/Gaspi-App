@@ -168,9 +168,9 @@ class _DeliveryOrderPageState extends ConsumerState<DeliveryOrderPage> {
           _selectedStatus = selected ? status : null;
         });
       },
-      backgroundColor: AppTheme.backgroundColor,
-      selectedColor: AppTheme.primaryColor.withOpacity(0.2),
-      checkmarkColor: AppTheme.primaryColor,
+      backgroundColor: Colors.grey[200],
+      selectedColor: const Color(0xFF007EFF).withValues(alpha: 0.2),
+      checkmarkColor: const Color(0xFF007EFF),
       labelStyle: TextStyle(
         color: isSelected ? AppTheme.primaryColor : AppTheme.textSecondaryColor,
         fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
@@ -235,7 +235,7 @@ class _DeliveryOrderCard extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
                       color: _getStatusColor(deliveryOrder.status)
-                          .withOpacity(0.1),
+                          .withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(

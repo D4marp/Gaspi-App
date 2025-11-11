@@ -430,52 +430,28 @@ class ProductsPage extends ConsumerWidget {
             ),
           ),
 
-          // Floating Add Button
-          Positioned(
+            // Floating Add Button (bigger)
+            Positioned(
             bottom: navHeight + (screenHeight * 0.02),
             right: screenWidth * 0.08,
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddProductPage(),
-                  ),
-                );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) => const AddProductPage(),
+                ),
+              );
               },
-              child: Container(
-                padding: EdgeInsets.all(screenHeight * 0.012),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF5CBA4B),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  shadows: [
-                    BoxShadow(
-                      color: const Color(0x26000000),
-                      blurRadius: 6.8,
-                      offset: const Offset(0, 0),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      Assets.icons.add,
-                      width: screenHeight * 0.032,
-                      height: screenHeight * 0.032,
-                    ),
-                  ],
-                ),
+              
+              child: SvgPicture.asset(
+                Assets.icons.add,
+                width: screenHeight * 0.08,
+                height: screenHeight * 0.08,
+              ),
               ),
             ),
-          ),
-
-          // Bottom Navigation Bar - Fixed Position
+            
           Positioned(
             left: 0,
             right: 0,

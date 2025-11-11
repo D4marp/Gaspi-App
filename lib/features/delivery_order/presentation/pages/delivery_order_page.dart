@@ -159,7 +159,7 @@ class _DeliveryOrderPageState extends ConsumerState<DeliveryOrderPage> {
         });
       },
       backgroundColor: Colors.grey[200],
-      selectedColor: const Color(0xFF007EFF).withOpacity(0.2),
+      selectedColor: const Color(0xFF007EFF).withValues(alpha: 0.2),
       checkmarkColor: const Color(0xFF007EFF),
       labelStyle: TextStyle(
         color: isSelected ? const Color(0xFF007EFF) : Colors.grey[600],
@@ -225,7 +225,7 @@ class _DeliveryOrderCard extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
                       color: _getStatusColor(deliveryOrder.status)
-                          .withOpacity(0.1),
+                          .withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(

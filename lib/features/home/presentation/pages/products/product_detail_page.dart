@@ -53,20 +53,54 @@ class ProductDetailPage extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Product Title
+                  // Product Title with Edit Icon
                   Container(
                     width: double.infinity,
                     margin: EdgeInsets.only(bottom: screenHeight * 0.02),
-                    child: Text(
-                      productName,
-                      style: TextStyle(
-                        color: const Color(0xFF101828),
-                        fontSize: 18,
-                        fontFamily: 'Nunito Sans',
-                        fontWeight: FontWeight.w700,
-                        height: 1.20,
-                        letterSpacing: -0.36,
-                      ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          Assets.icons.mdiGasCylinder,
+                          width: 16,
+                          height: 16,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            productName,
+                            style: const TextStyle(
+                              color: Color(0xFF101828),
+                              fontSize: 16,
+                              fontFamily: 'Nunito Sans',
+                              fontWeight: FontWeight.w700,
+                              height: 1.20,
+                              letterSpacing: -0.32,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProductPage(
+                                  productName: productName,
+                                  productCategory: productCategory,
+                                ),
+                              ),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            Assets.icons.edit,
+                            width: 20,
+                            height: 20,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
@@ -225,39 +259,6 @@ class ProductDetailPage extends ConsumerWidget {
                     ],
                   ),
                 ],
-              ),
-            ),
-          ),
-
-          // Edit Button - Fixed Position (Top Right)
-          Positioned(
-            right: screenWidth * 0.08,
-            top: screenHeight * 0.063,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditProductPage(
-                      productName: productName,
-                      productCategory: productCategory,
-                    ),
-                  ),
-                );
-              },
-              child: Container(
-                width: 24,
-                height: 24,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: SvgPicture.asset(
-                  Assets.icons.edit,
-                  width: 20,
-                  height: 20,
-                ),
               ),
             ),
           ),

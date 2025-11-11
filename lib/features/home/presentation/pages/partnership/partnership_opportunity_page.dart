@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../../core/gen/assets.gen.dart';
-import '../../../../core/theme/app_theme.dart';
+import 'package:gaspi_app/core/gen/assets.gen.dart';
+import 'package:gaspi_app/core/theme/app_theme.dart';
 
 /// Halaman Peluang Kemitraan
 class PartnershipOpportunityPage extends StatelessWidget {

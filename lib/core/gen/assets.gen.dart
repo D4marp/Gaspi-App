@@ -35,6 +35,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/document-text.svg
   String get documentText => 'assets/icons/document-text.svg';
 
+  /// File path: assets/icons/edit.svg
+  String get edit => 'assets/icons/edit.svg';
+
   /// File path: assets/icons/home-2.svg
   String get home2 => 'assets/icons/home-2.svg';
 
@@ -83,6 +86,7 @@ class $AssetsIconsGen {
     box,
     convert3dCube,
     documentText,
+    edit,
     home2,
     mdiGasCylinder,
     menu,

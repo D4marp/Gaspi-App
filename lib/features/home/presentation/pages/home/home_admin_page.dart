@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gaspi_app/core/gen/assets.gen.dart';
+import 'package:gaspi_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:gaspi_app/features/home/presentation/widgets/navigation_wrapper.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/gen/assets.gen.dart';
-import '../../../auth/presentation/providers/auth_provider.dart';
-import '../widgets/navigation_wrapper.dart';
 
 class HomeAdminPage extends ConsumerWidget {
   const HomeAdminPage({super.key});

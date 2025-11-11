@@ -7,9 +7,10 @@ import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/onboarding_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/delivery_order/presentation/pages/delivery_order_page.dart';
-import '../../features/home/presentation/pages/home_admin_page.dart';
-import '../../features/home/presentation/pages/partnership_opportunity_page.dart';
-import '../../features/home/presentation/pages/notification_page.dart';
+import '../../features/home/presentation/pages/home/home_admin_page.dart';
+import '../../features/home/presentation/pages/partnership/partnership_opportunity_page.dart';
+import '../../features/home/presentation/pages/notification/notification_page.dart';
+import '../../features/home/presentation/pages/products/products_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
@@ -99,6 +100,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/home',
         builder: (context, state) => const HomeAdminPage(),
+      ),
+
+      // Products Route
+      GoRoute(
+        path: '/products',
+        builder: (context, state) => const ProductsPage(),
       ),
 
       // Delivery Order Routes

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gaspi_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:gaspi_app/features/home/presentation/widgets/role_based_bottom_navigation.dart';
 import 'package:go_router/go_router.dart';
-import '../../../auth/presentation/providers/auth_provider.dart';
-import '../widgets/role_based_bottom_navigation.dart';
+
 
 class NotificationPage extends ConsumerWidget {
   const NotificationPage({super.key});

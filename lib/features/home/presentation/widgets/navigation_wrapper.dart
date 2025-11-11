@@ -28,6 +28,7 @@ class NavigationWrapper extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5), // Match page background
       body: Stack(
+        clipBehavior: Clip.none, // Allow overflow for floating QR button
         children: [
           // Main Content dengan padding bawah untuk navigation
           Positioned(

@@ -117,9 +117,11 @@ class RoleBasedBottomNavigation extends StatelessWidget {
     final iconSize = screenWidth * 0.060; // 6.5% of screen width
     final fontSize = screenWidth * 0.023; // 2.7% of screen width
 
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
+    return SizedBox(
+      height: navHeight,
+      child: Stack(
+        clipBehavior: Clip.none, // Allow overflow for floating button
+        children: [
         // Navigation bar dengan notch
         ClipPath(
           clipper: BottomNavClipper(),
@@ -204,6 +206,7 @@ class RoleBasedBottomNavigation extends StatelessWidget {
           ),
         ),
       ],
+      ),
     );
   }
 

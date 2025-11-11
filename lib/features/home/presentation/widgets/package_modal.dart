@@ -70,7 +70,7 @@ class _PackageModalState extends State<PackageModal> {
           spacing: 24,
           children: [
             // Header
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -97,7 +97,7 @@ class _PackageModalState extends State<PackageModal> {
             ),
 
             // Content
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Column(
                 mainAxisSize: MainAxisSize.min,

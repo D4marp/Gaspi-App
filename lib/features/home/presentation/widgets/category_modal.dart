@@ -67,7 +67,7 @@ class _CategoryModalState extends State<CategoryModal> {
           spacing: 24,
           children: [
             // Header
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -94,7 +94,7 @@ class _CategoryModalState extends State<CategoryModal> {
             ),
 
             // Content
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Column(
                 mainAxisSize: MainAxisSize.min,

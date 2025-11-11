@@ -126,7 +126,7 @@ class ProductDetailPage extends ConsumerWidget {
                   ),
 
                   // Item Description
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -308,7 +308,7 @@ class ProductDetailPage extends ConsumerWidget {
   }
 
   Widget _buildDetailRow(String label, String value, double screenWidth) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.min,

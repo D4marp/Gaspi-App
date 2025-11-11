@@ -8,11 +8,13 @@ import 'bottom_nav_clipper.dart';
 class RoleBasedBottomNavigation extends StatelessWidget {
   final String currentRoute;
   final String userRole; // 'SUPERADMIN', 'ADMIN', 'MAINTENANCE', 'SUPERVISOR', 'PRODUCTION'
+  final Color? backgroundColor; // Optional background color override
 
   const RoleBasedBottomNavigation({
     super.key,
     required this.currentRoute,
     required this.userRole,
+    this.backgroundColor,
   });
 
   List<NavItem> _getNavItems() {
@@ -128,9 +130,9 @@ class RoleBasedBottomNavigation extends StatelessWidget {
           child: Container(
             width: screenWidth,
             height: navHeight,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: backgroundColor ?? Colors.white, // Use custom background or default white
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
               ),

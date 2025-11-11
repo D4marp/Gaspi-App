@@ -188,19 +188,29 @@ class RoleBasedBottomNavigation extends StatelessWidget {
           ),
         ),
         
-        // Floating QR Button - Responsive size
+        // Floating QR Button - Responsive size with expanded hit area
         Positioned(
           left: 0,
           right: 0,
           top: -(qrSize * 0.6), // Position based on QR size
           child: Center(
             child: GestureDetector(
-              onTap: () => context.go('/qr-scan'),
-              child: SvgPicture.asset(
-                Assets.icons.qr,
-                width: qrSize,
-                height: qrSize,
-                fit: BoxFit.contain,
+              onTap: () {
+                debugPrint('QR Button tapped!'); // Debug print
+                context.go('/qr-scan');
+              },
+              child: Container(
+                width: qrSize + 20, // Add padding for easier tap
+                height: qrSize + 20,
+                color: Colors.transparent, // Transparent but still tappable
+                child: Center(
+                  child: SvgPicture.asset(
+                    Assets.icons.qr,
+                    width: qrSize,
+                    height: qrSize,
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
             ),
           ),

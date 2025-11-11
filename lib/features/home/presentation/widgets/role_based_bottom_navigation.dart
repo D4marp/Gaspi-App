@@ -194,16 +194,18 @@ class RoleBasedBottomNavigation extends StatelessWidget {
           right: 0,
           top: -(qrSize * 0.6), // Position based on QR size
           child: Center(
-            child: GestureDetector(
-              onTap: () {
-                debugPrint('QR Button tapped!'); // Debug print
-                context.go('/qr-scan');
-              },
-              child: Container(
-                width: qrSize + 20, // Add padding for easier tap
-                height: qrSize + 20,
-                color: Colors.transparent, // Transparent but still tappable
-                child: Center(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  debugPrint('QR Button tapped!'); // Debug print
+                  context.go('/qr-scan');
+                },
+                borderRadius: BorderRadius.circular(qrSize / 2),
+                child: Container(
+                  width: qrSize + 20, // Add padding for easier tap
+                  height: qrSize + 20,
+                  padding: const EdgeInsets.all(10),
                   child: SvgPicture.asset(
                     Assets.icons.qr,
                     width: qrSize,

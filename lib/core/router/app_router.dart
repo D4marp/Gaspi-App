@@ -11,6 +11,8 @@ import '../../features/home/presentation/pages/home/home_admin_page.dart';
 import '../../features/home/presentation/pages/partnership/partnership_opportunity_page.dart';
 import '../../features/home/presentation/pages/notification/notification_page.dart';
 import '../../features/home/presentation/pages/products/products_page.dart';
+import '../../features/home/presentation/pages/members/members_page.dart';
+import '../../features/home/presentation/pages/members/member_detail_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
@@ -107,6 +109,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/products',
         builder: (context, state) => const ProductsPage(),
+      ),
+
+      // Members Routes
+      GoRoute(
+        path: '/members',
+        builder: (context, state) => const MembersPage(),
+      ),
+
+      GoRoute(
+        path: '/member-detail',
+        builder: (context, state) => const MemberDetailPage(),
       ),
 
       // Delivery Order Routes

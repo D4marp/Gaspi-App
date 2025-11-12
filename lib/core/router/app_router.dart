@@ -13,6 +13,8 @@ import '../../features/home/presentation/pages/notification/notification_page.da
 import '../../features/home/presentation/pages/products/products_page.dart';
 import '../../features/home/presentation/pages/members/members_page.dart';
 import '../../features/home/presentation/pages/members/member_detail_page.dart';
+import '../../features/home/presentation/pages/members/add_member_page.dart';
+import '../../features/home/presentation/pages/members/edit_member_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
@@ -120,6 +122,19 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/member-detail',
         builder: (context, state) => const MemberDetailPage(),
+      ),
+
+      GoRoute(
+        path: '/add-member',
+        builder: (context, state) => const AddMemberPage(),
+      ),
+
+      GoRoute(
+        path: '/edit-member/:memberId',
+        builder: (context, state) {
+          final memberId = state.pathParameters['memberId'] ?? '';
+          return EditMemberPage(memberId: memberId);
+        },
       ),
 
       // Delivery Order Routes

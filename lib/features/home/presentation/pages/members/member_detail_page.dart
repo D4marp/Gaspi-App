@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/gen/assets.gen.dart';
 import '../../../../auth/presentation/providers/auth_provider.dart';
 import '../../widgets/role_based_bottom_navigation.dart';
 
@@ -65,10 +67,10 @@ class MemberDetailPage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.business,
-                          size: 16,
-                          color: const Color(0xFF101828),
+                        SvgPicture.asset(
+                          Assets.icons.people,
+                          width: 16,
+                          height: 16,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
@@ -89,10 +91,10 @@ class MemberDetailPage extends ConsumerWidget {
                           onTap: () {
                             context.push('/edit-member/$memberId');
                           },
-                          child: const Icon(
-                            Icons.edit,
-                            size: 20,
-                            color: Color(0xFF007EFF),
+                          child: SvgPicture.asset(
+                            Assets.icons.edit,
+                            width: 20,
+                            height: 20,
                           ),
                         ),
                       ],

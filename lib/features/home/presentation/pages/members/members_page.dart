@@ -276,13 +276,7 @@ class _MembersPageState extends ConsumerState<MembersPage> {
             right: screenWidth * 0.082,
             child: GestureDetector(
               onTap: () {
-                // TODO: Navigate to add member page
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Add new member functionality coming soon'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
+                context.push('/add-member');
               },
               child: Container(
                 padding: EdgeInsets.all(screenWidth * 0.031),

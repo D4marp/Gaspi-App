@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gaspi_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../auth/presentation/providers/auth_provider.dart';
 import '../../widgets/role_based_bottom_navigation.dart';
 
 class MemberDetailPage extends ConsumerWidget {
@@ -23,10 +23,11 @@ class MemberDetailPage extends ConsumerWidget {
     final navHeight = screenHeight * 0.11;
 
     // Mock member data
-    final memberData = {
-      'name': 'PT CATERPILLAR',
-      'code': 'CATB',
-      'legalStatus': 'Company',
+    final memberName = 'PT CATERPILLAR';
+    final memberDetails = {
+      'memberCode': 'MEM-001',
+      'legalStatus': 'Company (PT)',
+      'memberName': memberName,
       'regAssets': 'Cannot register assets',
       'doSettings': 'DO Number Auto',
       'cpName': 'Sudirman (HR)',
@@ -36,72 +37,263 @@ class MemberDetailPage extends ConsumerWidget {
       'email': 'partner@caterpillar.com',
       'fax': '29425',
       'address': 'Jl. Brigjen Katamso No.76 - 78, Tj. Uncang, Kec. Batu Aji, Kota Batam, Kepulauan Riau',
-      'remark': '-',
+      'remark': 'Industrial equipment supplier and distributor',
     };
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Header Section - Fixed
+          // Main Content - Scrollable
           Positioned(
-            left: 0,
-            top: 0,
-            right: 0,
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(
-                top: screenHeight * 0.057,
-                left: screenWidth * 0.082,
-                right: screenWidth * 0.082,
-                bottom: screenHeight * 0.014,
-              ),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
+            left: screenWidth * 0.08,
+            top: screenHeight * 0.14,
+            right: screenWidth * 0.08,
+            bottom: navHeight + (screenHeight * 0.02),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Header with Back Button
-                  SizedBox(
+                  // Member Title with Edit Icon
+                  Container(
                     width: double.infinity,
-                    height: screenWidth * 0.097,
+                    margin: EdgeInsets.only(bottom: screenHeight * 0.02),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Container(
-                            width: screenWidth * 0.062,
-                            height: screenWidth * 0.062,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: Icon(
-                              Icons.arrow_back,
-                              size: screenWidth * 0.051,
-                              color: const Color(0xFF101828),
+                        Icon(
+                          Icons.business,
+                          size: 16,
+                          color: const Color(0xFF101828),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            memberName,
+                            style: const TextStyle(
+                              color: Color(0xFF101828),
+                              fontSize: 16,
+                              fontFamily: 'Nunito Sans',
+                              fontWeight: FontWeight.w700,
+                              height: 1.20,
+                              letterSpacing: -0.32,
                             ),
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.031),
-                        Expanded(
-                          child: Text(
-                            'Member Detail',
-                            style: TextStyle(
-                              color: const Color(0xFF191D0B),
-                              fontSize: screenWidth * 0.041,
-                              fontFamily: 'Nunito Sans',
-                              fontWeight: FontWeight.w700,
-                              height: 1.10,
-                              letterSpacing: -0.32,
-                            ),
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () {
+                            context.push('/edit-member/$memberId');
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            size: 20,
+                            color: Color(0xFF007EFF),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Member Information Specifications
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: screenHeight * 0.03),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: screenHeight * 0.01),
+                        // Member Code
+                        _buildDetailRow(
+                          'Member Code',
+                          memberDetails['memberCode']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        // Legal Status
+                        _buildDetailRow(
+                          'Legal Status',
+                          memberDetails['legalStatus']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        // Member Name
+                        _buildDetailRow(
+                          'Member Name',
+                          memberDetails['memberName']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        // Reg Assets
+                        _buildDetailRow(
+                          'Reg Assets',
+                          memberDetails['regAssets']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        // DO Settings
+                        _buildDetailRow(
+                          'DO Settings',
+                          memberDetails['doSettings']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.025),
+                        // Divider
+                        Container(
+                          width: double.infinity,
+                          height: 1,
+                          color: const Color(0xFFEDEDED),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Contact Information Section
+                  SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: screenHeight * 0.01),
+                        Text(
+                          'Contact Information',
+                          style: TextStyle(
+                            color: const Color(0xFF353535),
+                            fontSize: 20,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w700,
+                            height: 1.20,
+                            letterSpacing: -0.40,
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.02),
+                        _buildDetailRow(
+                          'Contact Person',
+                          memberDetails['cpName']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        _buildDetailRow(
+                          'Phone Number',
+                          memberDetails['cpNumber']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.02),
+                        _buildDetailRow(
+                          'Phone',
+                          memberDetails['phone']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        _buildDetailRow(
+                          'Phone 2',
+                          memberDetails['phone2']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        _buildDetailRow(
+                          'Email',
+                          memberDetails['email']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        _buildDetailRow(
+                          'Fax',
+                          memberDetails['fax']!,
+                          screenWidth,
+                        ),
+                        SizedBox(height: screenHeight * 0.025),
+                        // Divider
+                        Container(
+                          width: double.infinity,
+                          height: 1,
+                          color: const Color(0xFFEDEDED),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Address Section
+                  SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: screenHeight * 0.02),
+                        Text(
+                          'Address',
+                          style: TextStyle(
+                            color: const Color(0xFF353535),
+                            fontSize: 20,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w700,
+                            height: 1.20,
+                            letterSpacing: -0.40,
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.02),
+                        Text(
+                          memberDetails['address']!,
+                          style: TextStyle(
+                            color: const Color(0xFF677487),
+                            fontSize: 14,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w400,
+                            height: 1.40,
+                            letterSpacing: -0.28,
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.025),
+                        // Divider
+                        Container(
+                          width: double.infinity,
+                          height: 1,
+                          color: const Color(0xFFEDEDED),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Member Remark Section
+                  SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: screenHeight * 0.02),
+                        Text(
+                          'Member Remark',
+                          style: TextStyle(
+                            color: const Color(0xFF353535),
+                            fontSize: 20,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w700,
+                            height: 1.20,
+                            letterSpacing: -0.40,
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.02),
+                        Text(
+                          memberDetails['remark']!,
+                          style: TextStyle(
+                            color: const Color(0xFF677487),
+                            fontSize: 14,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w400,
+                            height: 1.40,
+                            letterSpacing: -0.28,
                           ),
                         ),
                       ],
@@ -112,133 +304,65 @@ class MemberDetailPage extends ConsumerWidget {
             ),
           ),
 
-          // Main Content - Scrollable
+          // Header Section - Fixed
           Positioned(
-            left: screenWidth * 0.082,
-            top: screenHeight * 0.13,
-            right: screenWidth * 0.082,
-            bottom: navHeight + (screenHeight * 0.02),
-            child: SingleChildScrollView(
+            left: 0,
+            top: 0,
+            right: 0,
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(
+                top: screenHeight * 0.06,
+                left: screenWidth * 0.08,
+                right: screenWidth * 0.08,
+                bottom: screenHeight * 0.015,
+              ),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Member Name Card
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(bottom: screenHeight * 0.028),
-                    child: Text(
-                      memberData['name']!,
-                      style: TextStyle(
-                        color: const Color(0xFF101828),
-                        fontSize: screenWidth * 0.051,
-                        fontFamily: 'Nunito Sans',
-                        fontWeight: FontWeight.w700,
-                        height: 1.20,
-                        letterSpacing: -0.60,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () => context.pop(),
+                        child: Container(
+                          width: 24,
+                          height: 24,
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_back,
+                            size: 20,
+                            color: Color(0xFF393D4E),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-
-                  // Detail Card
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(screenWidth * 0.062),
-                    decoration: ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          width: 1,
-                          color: Color(0xFFEDEDED),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'Member Detail',
+                          style: TextStyle(
+                            color: const Color(0xFF191D0B),
+                            fontSize: 16,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w700,
+                            height: 1.10,
+                            letterSpacing: -0.32,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(16),
                       ),
-                      shadows: const [
-                        BoxShadow(
-                          color: Color(0x0C000000),
-                          blurRadius: 71,
-                          offset: Offset(0, 0),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Member Information Section
-                        _buildDetailSection(
-                          context,
-                          title: 'Member Information',
-                          items: [
-                            _buildDetailRow('Memb. Code', memberData['code']!),
-                            _buildDetailRow('Legal Status', memberData['legalStatus']!),
-                            _buildDetailRow('Memb. Name', memberData['name']!),
-                            _buildDetailRow('Reg Assets', memberData['regAssets']!),
-                            _buildDetailRow('DO Settings', memberData['doSettings']!),
-                          ],
-                        ),
-
-                        SizedBox(height: screenHeight * 0.019),
-
-                        // Divider
-                        Container(
-                          width: double.infinity,
-                          height: screenHeight * 0.0005,
-                          color: const Color(0xFFEDEDED),
-                        ),
-
-                        SizedBox(height: screenHeight * 0.019),
-
-                        // Contact Person Section
-                        _buildDetailSection(
-                          context,
-                          title: 'Contact Person',
-                          items: [
-                            _buildDetailRow('Name', memberData['cpName']!),
-                            _buildDetailRow('Number', memberData['cpNumber']!),
-                          ],
-                        ),
-
-                        SizedBox(height: screenHeight * 0.019),
-
-                        // Divider
-                        Container(
-                          width: double.infinity,
-                          height: screenHeight * 0.0005,
-                          color: const Color(0xFFEDEDED),
-                        ),
-
-                        SizedBox(height: screenHeight * 0.019),
-
-                        // Contact & Address Section
-                        _buildDetailSection(
-                          context,
-                          title: 'Contact & Address',
-                          items: [
-                            _buildDetailRow('Phone', memberData['phone']!),
-                            _buildDetailRow('Phone 2', memberData['phone2']!),
-                            _buildDetailRow('Email', memberData['email']!),
-                            _buildDetailRow('Fax', memberData['fax']!),
-                            _buildDetailRow('Address', memberData['address']!),
-                          ],
-                        ),
-
-                        SizedBox(height: screenHeight * 0.028),
-
-                        // Member Remark Section
-                        _buildDetailSection(
-                          context,
-                          title: 'Member Remark',
-                          isRemark: true,
-                          remark: memberData['remark']!,
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
-
-                  SizedBox(height: screenHeight * 0.02),
                 ],
               ),
             ),
@@ -259,113 +383,55 @@ class MemberDetailPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildDetailSection(
-    BuildContext context, {
-    required String title,
-    List<Widget>? items,
-    bool isRemark = false,
-    String? remark,
-  }) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: const Color(0xFF353535),
-            fontSize: screenWidth * 0.041,
-            fontFamily: 'Nunito Sans',
-            fontWeight: FontWeight.w700,
-            height: 1.20,
-            letterSpacing: -0.32,
+  Widget _buildDetailRow(String label, String value, double screenWidth) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: screenWidth * 0.23,
+            child: Text(
+              label,
+              style: TextStyle(
+                color: const Color(0xFF677487),
+                fontSize: 14,
+                fontFamily: 'Nunito Sans',
+                fontWeight: FontWeight.w600,
+                height: 1.40,
+                letterSpacing: -0.28,
+              ),
+            ),
           ),
-        ),
-        SizedBox(height: screenHeight * 0.019),
-        if (isRemark)
           Text(
-            remark ?? '-',
+            ':',
             style: TextStyle(
               color: const Color(0xFF677487),
-              fontSize: screenWidth * 0.036,
+              fontSize: 14,
               fontFamily: 'Nunito Sans',
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
               height: 1.40,
               letterSpacing: -0.28,
             ),
-          )
-        else
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: items ?? [],
           ),
-      ],
-    );
-  }
-
-  Widget _buildDetailRow(String label, String value) {
-    return Builder(
-      builder: (context) {
-        final screenWidth = MediaQuery.of(context).size.width;
-        final screenHeight = MediaQuery.of(context).size.height;
-
-        return Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(bottom: screenHeight * 0.009),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: screenWidth * 0.23,
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    color: const Color(0xFF677487),
-                    fontSize: screenWidth * 0.036,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w600,
-                    height: 1.40,
-                    letterSpacing: -0.28,
-                  ),
-                ),
+          SizedBox(width: screenWidth * 0.03),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(
+                color: const Color(0xFF677487),
+                fontSize: 14,
+                fontFamily: 'Nunito Sans',
+                fontWeight: FontWeight.w600,
+                height: 1.40,
+                letterSpacing: -0.28,
               ),
-              Text(
-                ':',
-                style: TextStyle(
-                  color: const Color(0xFF677487),
-                  fontSize: screenWidth * 0.036,
-                  fontFamily: 'Nunito Sans',
-                  fontWeight: FontWeight.w600,
-                  height: 1.40,
-                  letterSpacing: -0.28,
-                ),
-              ),
-              SizedBox(width: screenWidth * 0.031),
-              Expanded(
-                child: Text(
-                  value,
-                  style: TextStyle(
-                    color: const Color(0xFF677487),
-                    fontSize: screenWidth * 0.036,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w600,
-                    height: 1.40,
-                    letterSpacing: -0.28,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

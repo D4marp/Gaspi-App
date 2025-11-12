@@ -121,27 +121,30 @@ class _OnboardingPageState extends State<OnboardingPage>
     required OnboardingItem item,
     required bool isLastPage,
   }) {
-    // Atur ukuran image berdasarkan index
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    
+    // Atur ukuran image berdasarkan index - responsive
     late double imageWidth;
     late double imageHeight;
     
     if (_currentPage == 0) {
-      // Screen 1: ukuran besar (sesuai design original)
-      imageWidth = 370;
-      imageHeight = 500;
+      // Screen 1: ukuran besar (95% of screen width)
+      imageWidth = screenWidth * 0.95;
+      imageHeight = screenHeight * 0.59;
     } else if (_currentPage == 1) {
-      // Screen 2: ukuran lebih kecil
-      imageWidth = 240;
-      imageHeight = 320;
+      // Screen 2: ukuran lebih kecil (62% of screen width)
+      imageWidth = screenWidth * 0.62;
+      imageHeight = screenHeight * 0.38;
     } else {
-      // Screen 3: ukuran medium
-      imageWidth = 280;
-      imageHeight = 380;
+      // Screen 3: ukuran medium (72% of screen width)
+      imageWidth = screenWidth * 0.72;
+      imageHeight = screenHeight * 0.45;
     }
 
     return Container(
-      width: 390,
-      height: 844,
+      width: double.infinity,
+      height: double.infinity,
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         image: DecorationImage(
@@ -216,104 +219,79 @@ class _OnboardingPageState extends State<OnboardingPage>
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      spacing: 64,
+                      spacing: screenHeight * 0.076,
                       children: [
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            spacing: 24,
+                            spacing: screenHeight * 0.028,
                             children: [
                               Container(
                                 width: double.infinity,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 32),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 325,
-                                      child: Text(
-                                        item.title,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: Color(0xFF242424),
-                                          fontSize: 32,
-                                          fontFamily: 'Nunito Sans',
-                                          fontWeight: FontWeight.w700,
-                                          height: 1.20,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
+                                child: Text(
+                                  item.title,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: const Color(0xFF242424),
+                                    fontSize: screenWidth * 0.082,
+                                    fontFamily: 'Nunito Sans',
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.20,
+                                  ),
                                 ),
                               ),
                               Container(
                                 width: double.infinity,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 32),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 10,
-                                  children: [
-                                    SizedBox(
-                                      width: 311,
-                                      child: Text(
-                                        item.description,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: Color(0xFF677487),
-                                          fontSize: 16,
-                                          fontFamily: 'Nunito Sans',
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.60,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
+                                child: Text(
+                                  item.description,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: const Color(0xFF677487),
+                                    fontSize: screenWidth * 0.041,
+                                    fontFamily: 'Nunito Sans',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.60,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
+                          Container(
                           width: double.infinity,
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 32),
+                          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            spacing: 10,
+                            spacing: screenWidth * 0.026,
                             children: [
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                spacing: 2.67,
+                                spacing: screenWidth * 0.007,
                                 children: List.generate(
                                   _onboardingItems.length,
                                   (index) => AnimatedContainer(
                                     duration: const Duration(
                                       milliseconds: 300,
                                     ),
-                                    width: index == _currentPage ? 48 : 8,
-                                    height: 8,
+                                    width: index == _currentPage ? screenWidth * 0.123 : screenWidth * 0.021,
+                                    height: screenWidth * 0.021,
                                     decoration: ShapeDecoration(
                                       color: index == _currentPage
                                           ? const Color(0xFF007EFF)
                                           : const Color(0xFFB3D8FF),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(42.67),
+                                            BorderRadius.circular(screenWidth * 0.11),
                                       ),
                                     ),
                                   ),
@@ -323,9 +301,9 @@ class _OnboardingPageState extends State<OnboardingPage>
                                 GestureDetector(
                                   onTap: _skipOnboarding,
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24,
-                                      vertical: 12,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth * 0.062,
+                                      vertical: screenHeight * 0.014,
                                     ),
                                     decoration: ShapeDecoration(
                                       color: const Color(0xFFB3D8FF),
@@ -334,12 +312,12 @@ class _OnboardingPageState extends State<OnboardingPage>
                                             BorderRadius.circular(30),
                                       ),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'Skip',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: Color(0xFF007EFF),
-                                        fontSize: 16,
+                                        color: const Color(0xFF007EFF),
+                                        fontSize: screenWidth * 0.041,
                                         fontFamily: 'Nunito Sans',
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -350,9 +328,9 @@ class _OnboardingPageState extends State<OnboardingPage>
                                 GestureDetector(
                                   onTap: _nextPage,
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24,
-                                      vertical: 12,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth * 0.062,
+                                      vertical: screenHeight * 0.014,
                                     ),
                                     decoration: ShapeDecoration(
                                       color: const Color(0xFF007EFF),
@@ -364,9 +342,9 @@ class _OnboardingPageState extends State<OnboardingPage>
                                     child: Text(
                                       isLastPage ? 'Get Started' : 'Next',
                                       textAlign: TextAlign.center,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 16,
+                                        fontSize: screenWidth * 0.041,
                                         fontFamily: 'Nunito Sans',
                                         fontWeight: FontWeight.w600,
                                       ),

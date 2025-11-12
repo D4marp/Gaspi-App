@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Header widget for QR Scanner with back button, title, and more options
+/// Header widget for QR Scanner with back button, title, and more options - Responsive
 class QrScannerHeader extends StatelessWidget {
   final VoidCallback onMoreOptionsPressed;
 
@@ -12,10 +12,13 @@ class QrScannerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final horizontalPadding = screenWidth * 0.05; // 5% of screen width
+    
     return Positioned(
-      left: 40,
+      left: horizontalPadding,
       top: 0,
-      right: 40,
+      right: horizontalPadding,
       child: SafeArea(
         bottom: false,
         child: Padding(
@@ -30,7 +33,7 @@ class QrScannerHeader extends StatelessWidget {
               // Title
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // 4% padding
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                     decoration: ShapeDecoration(
@@ -39,12 +42,12 @@ class QrScannerHeader extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Scan QR Code',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: screenWidth * 0.05, // 5% of screen width
                         fontFamily: 'Nunito Sans',
                         fontWeight: FontWeight.w700,
                         height: 1.20,

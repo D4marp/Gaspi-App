@@ -6,9 +6,13 @@ class AssetOptionsBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final horizontalPadding = screenWidth * 0.08; // 8% of screen width
+    final titleFontSize = screenWidth * 0.046; // 4.6% of screen width
+    
     return Container(
-      width: 390,
-      padding: const EdgeInsets.all(32),
+      width: double.infinity,
+      padding: EdgeInsets.all(horizontalPadding),
       decoration: const ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
@@ -26,23 +30,20 @@ class AssetOptionsBottomSheet extends StatelessWidget {
           // Title Section
           Container(
             width: double.infinity,
-            margin: const EdgeInsets.only(bottom: 32),
-            child: const Column(
+            margin: EdgeInsets.only(bottom: horizontalPadding),
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 326,
-                  child: Text(
-                    'What asset are you looking for?',
-                    style: TextStyle(
-                      color: Color(0xFF242424),
-                      fontSize: 18,
-                      fontFamily: 'Nunito Sans',
-                      fontWeight: FontWeight.w700,
-                      height: 1.20,
-                    ),
+                Text(
+                  'What asset are you looking for?',
+                  style: TextStyle(
+                    color: const Color(0xFF242424),
+                    fontSize: titleFontSize,
+                    fontFamily: 'Nunito Sans',
+                    fontWeight: FontWeight.w700,
+                    height: 1.20,
                   ),
                 ),
               ],

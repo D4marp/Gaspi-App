@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Custom painter for QR scanner overlay with transparent center
+/// Custom painter for QR scanner overlay with transparent center - Responsive
 class QrScannerOverlayPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -17,12 +17,12 @@ class QrScannerOverlayPainter extends CustomPainter {
       paint,
     );
 
-    // Clear center area for scanning
+    // Clear center area for scanning - Responsive positioning
     final clearPaint = Paint()..blendMode = BlendMode.clear;
 
     final scanAreaSize = size.width * 0.65;
     final scanAreaLeft = (size.width - scanAreaSize) / 2;
-    final scanAreaTop = 125.0;
+    final scanAreaTop = size.height * 0.15; // 15% from top (responsive)
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(

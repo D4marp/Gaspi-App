@@ -12,6 +12,8 @@ class HomeAdminPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return NavigationWrapper(
       title: 'Home',
@@ -23,7 +25,12 @@ class HomeAdminPage extends ConsumerWidget {
                 // Header Section dengan Gradient
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.only(left: 32, right: 32, top: 48, bottom: 32),
+                  padding: EdgeInsets.only(
+                    left: screenWidth * 0.08,
+                    right: screenWidth * 0.08,
+                    top: screenHeight * 0.057,
+                    bottom: screenWidth * 0.08,
+                  ),
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment(0.50, 0.00),
@@ -43,28 +50,28 @@ class HomeAdminPage extends ConsumerWidget {
                           // Left: Greeting
                           Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.wb_sunny,
                                 color: Colors.white,
-                                size: 16.50,
+                                size: screenWidth * 0.042,
                               ),
-                              const SizedBox(width: 6),
+                              SizedBox(width: screenWidth * 0.015),
                               Row(
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Good morning, ',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 14,
+                                      fontSize: screenWidth * 0.036,
                                       fontFamily: 'Nunito Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                   Text(
                                     user?.name ?? 'User',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 14,
+                                      fontSize: screenWidth * 0.036,
                                       fontFamily: 'Nunito Sans',
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -77,9 +84,9 @@ class HomeAdminPage extends ConsumerWidget {
                           GestureDetector(
                             onTap: () => context.push('/notification'),
                             child: Container(
-                              width: 38,
-                              height: 38,
-                              padding: const EdgeInsets.all(10),
+                              width: screenWidth * 0.097,
+                              height: screenWidth * 0.097,
+                              padding: EdgeInsets.all(screenWidth * 0.026),
                               decoration: ShapeDecoration(
                                 color: const Color(0x260F0F0F),
                                 shape: RoundedRectangleBorder(
@@ -89,26 +96,26 @@ class HomeAdminPage extends ConsumerWidget {
                               child: Stack(
                                 children: [
                                   Positioned(
-                                    left: 3,
-                                    top: 3,
+                                    left: screenWidth * 0.008,
+                                    top: screenWidth * 0.008,
                                     child: Container(
-                                      width: 5,
-                                      height: 5,
+                                      width: screenWidth * 0.013,
+                                      height: screenWidth * 0.013,
                                       decoration: ShapeDecoration(
                                         color: const Color(0xFFE84848),
                                         shape: OvalBorder(
-                                          side: const BorderSide(
+                                          side: BorderSide(
                                             width: 1,
-                                            color: Color(0xFF224AA3),
+                                            color: const Color(0xFF224AA3),
                                           ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                const Icon(
+                                Icon(
                                   Icons.notifications_none,
                                   color: Colors.white,
-                                  size: 18,
+                                  size: screenWidth * 0.046,
                                 ),
                               ],
                             ),
@@ -116,26 +123,26 @@ class HomeAdminPage extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 32), // Reduced space for stats card
+                      SizedBox(height: screenHeight * 0.038),
                     ],
                   ),
                 ),
 
                 // Main Content
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 40), // Space for stats card overlap
+                      SizedBox(height: screenHeight * 0.047),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Quick Menu',
                           style: TextStyle(
-                            color: Color(0xFF303030),
-                            fontSize: 16,
+                            color: const Color(0xFF303030),
+                            fontSize: screenWidth * 0.041,
                             fontFamily: 'Nunito Sans',
                             fontWeight: FontWeight.w700,
                           ),
@@ -144,14 +151,14 @@ class HomeAdminPage extends ConsumerWidget {
                           'See All Menu',
                           style: TextStyle(
                             color: const Color(0xFF007EFF),
-                            fontSize: 12,
+                            fontSize: screenWidth * 0.031,
                             fontFamily: 'Nunito Sans',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: screenHeight * 0.019),
 
                     // Quick Actions Grid - 3 Rows x 2 Columns
                     // Row 1: Products & Members
@@ -163,7 +170,7 @@ class HomeAdminPage extends ConsumerWidget {
                           icon: Assets.icons.box,
                           onTap: () => context.go('/products'),
                         ),
-                        const SizedBox(width: 24),
+                        SizedBox(width: screenWidth * 0.062),
                         _buildMenuCard(
                           title: 'Members',
                           subtitle: 'GWN\nMember List',
@@ -172,7 +179,7 @@ class HomeAdminPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: screenHeight * 0.028),
 
                     // Row 2: Reg. Assets & Maintenance
                     Row(
@@ -183,7 +190,7 @@ class HomeAdminPage extends ConsumerWidget {
                           icon: Assets.icons.shieldTickBold,
                           onTap: () => context.go('/assets-registration'),
                         ),
-                        const SizedBox(width: 24),
+                        SizedBox(width: screenWidth * 0.062),
                         _buildMenuCard(
                           title: 'Maintenance',
                           subtitle: 'Assets\nMaintenance',
@@ -192,7 +199,7 @@ class HomeAdminPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: screenHeight * 0.028),
 
                     // Row 3: User Manage & Logs
                     Row(
@@ -203,7 +210,7 @@ class HomeAdminPage extends ConsumerWidget {
                           icon: Assets.icons.people,
                           onTap: () => context.go('/users'),
                         ),
-                        const SizedBox(width: 24),
+                        SizedBox(width: screenWidth * 0.062),
                         _buildMenuCard(
                           title: 'Logs',
                           subtitle: 'Process\n& Activity Logs',
@@ -212,7 +219,7 @@ class HomeAdminPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.15), // Dynamic bottom padding for nav
+                    SizedBox(height: screenHeight * 0.15),
                   ],
                 ),
               ),
@@ -221,12 +228,15 @@ class HomeAdminPage extends ConsumerWidget {
           
           // Stats Card - Positioned between gradient and content (overlapping)
           Positioned(
-            left: 32.50,
-            top: 112, // Adjusted position after reducing gradient padding
-            right: 32.50,
+            left: screenWidth * 0.083,
+            top: screenHeight * 0.133,
+            right: screenWidth * 0.083,
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.062,
+                vertical: screenHeight * 0.014,
+              ),
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -273,55 +283,61 @@ class HomeAdminPage extends ConsumerWidget {
     required String number,
     required String label,
   }) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: ShapeDecoration(
-            color: const Color(0xFFB3D8FF),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          child: SvgPicture.asset(
-            icon,
-            width: 20,
-            height: 20,
-            colorFilter: const ColorFilter.mode(
-              Color(0xFF007EFF),
-              BlendMode.srcIn,
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Builder(
+      builder: (context) {
+        final screenWidth = MediaQuery.of(context).size.width;
+        
+        return Row(
           children: [
-            Text(
-              number,
-              style: const TextStyle(
-                color: Color(0xFF393D4E),
-                fontSize: 12,
-                fontFamily: 'Nunito Sans',
-                fontWeight: FontWeight.w700,
-                height: 1.40,
-                letterSpacing: -0.24,
+            Container(
+              padding: EdgeInsets.all(screenWidth * 0.021),
+              decoration: ShapeDecoration(
+                color: const Color(0xFFB3D8FF),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: SvgPicture.asset(
+                icon,
+                width: screenWidth * 0.051,
+                height: screenWidth * 0.051,
+                colorFilter: const ColorFilter.mode(
+                  Color(0xFF007EFF),
+                  BlendMode.srcIn,
+                ),
               ),
             ),
-            Text(
-              label,
-              style: const TextStyle(
-                color: Color(0xFF68686D),
-                fontSize: 12,
-                fontFamily: 'Nunito Sans',
-                fontWeight: FontWeight.w400,
-                height: 1.40,
-                letterSpacing: -0.24,
-              ),
+            SizedBox(width: screenWidth * 0.031),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  number,
+                  style: TextStyle(
+                    color: const Color(0xFF393D4E),
+                    fontSize: screenWidth * 0.031,
+                    fontFamily: 'Nunito Sans',
+                    fontWeight: FontWeight.w700,
+                    height: 1.40,
+                    letterSpacing: -0.24,
+                  ),
+                ),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: const Color(0xFF68686D),
+                    fontSize: screenWidth * 0.031,
+                    fontFamily: 'Nunito Sans',
+                    fontWeight: FontWeight.w400,
+                    height: 1.40,
+                    letterSpacing: -0.24,
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -335,61 +351,68 @@ class HomeAdminPage extends ConsumerWidget {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
-        child: Container(
-          height: 150.47,
-          padding: const EdgeInsets.all(13.58),
-          decoration: ShapeDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment(0.50, 0.00),
-              end: Alignment(0.50, 1.00),
-              colors: [Color(0xFF099FE4), Color(0xFF0372E5)],
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14.04),
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontFamily: 'Nunito Sans',
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: -0.16,
+        child: Builder(
+          builder: (context) {
+            final screenWidth = MediaQuery.of(context).size.width;
+            final screenHeight = MediaQuery.of(context).size.height;
+            
+            return Container(
+              height: screenHeight * 0.178,
+              padding: EdgeInsets.all(screenWidth * 0.035),
+              decoration: ShapeDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment(0.50, 0.00),
+                  end: Alignment(0.50, 1.00),
+                  colors: [Color(0xFF099FE4), Color(0xFF0372E5)],
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14.04),
                 ),
               ),
-              Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(
-                    icon,
-                    width: 28,
-                    height: 28,
-                    colorFilter: const ColorFilter.mode(
-                      Colors.white,
-                      BlendMode.srcIn,
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: screenWidth * 0.041,
+                      fontFamily: 'Nunito Sans',
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.16,
                     ),
                   ),
-                  const SizedBox(width: 8.19),
-                  Expanded(
-                    child: Text(
-                      subtitle,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Nunito Sans',
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: -0.12,
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        icon,
+                        width: screenWidth * 0.072,
+                        height: screenWidth * 0.072,
+                        colorFilter: const ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
                       ),
-                    ),
+                      SizedBox(width: screenWidth * 0.021),
+                      Expanded(
+                        child: Text(
+                          subtitle,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: screenWidth * 0.031,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: -0.12,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

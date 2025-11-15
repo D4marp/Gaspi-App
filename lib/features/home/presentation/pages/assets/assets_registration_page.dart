@@ -251,15 +251,17 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.02),
-                  // Sort and Filter Chips - Scrollable
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        // Latest Chip
-                        Container(
+                  // Sort and Filter Chips - Full Width
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    spacing: 0,
+                    children: [
+                      // Latest Chip
+                      Expanded(
+                        flex: 1,
+                        child: Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.062,
+                            horizontal: screenWidth * 0.035,
                             vertical: screenHeight * 0.008,
                           ),
                           decoration: ShapeDecoration(
@@ -268,26 +270,34 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child: Text(
-                            'Latest',
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.80),
-                              fontSize: screenWidth * 0.032,
-                              fontFamily: 'Nunito Sans',
-                              fontWeight: FontWeight.w600,
-                              height: 1.40,
-                              letterSpacing: -0.24,
+                          child: Center(
+                            child: Text(
+                              'Latest',
+                              style: TextStyle(
+                                color: Colors.white.withValues(alpha: 0.80),
+                                fontSize: screenWidth * 0.032,
+                                fontFamily: 'Nunito Sans',
+                                fontWeight: FontWeight.w600,
+                                height: 1.40,
+                                letterSpacing: -0.24,
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.031),
-                        // Gas Type Filter
-                        _buildFilterChip(screenWidth, 'Gas Type'),
-                        SizedBox(width: screenWidth * 0.031),
-                        // Capacity Filter
-                        _buildFilterChip(screenWidth, 'Capacity'),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: screenWidth * 0.02),
+                      // Gas Type Filter
+                      Expanded(
+                        flex: 1,
+                        child: _buildFilterChip(screenWidth, screenHeight, 'Gas Type'),
+                      ),
+                      SizedBox(width: screenWidth * 0.02),
+                      // Capacity Filter
+                      Expanded(
+                        flex: 1,
+                        child: _buildFilterChip(screenWidth, screenHeight, 'Capacity'),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -352,15 +362,15 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
     );
   }
 
-  Widget _buildFilterChip(double screenWidth, String label) {
+  Widget _buildFilterChip(double screenWidth, double screenHeight, String label) {
     return GestureDetector(
       onTap: () {
         // TODO: Open filter modal
       },
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.062,
-          vertical: screenWidth * 0.02,
+          horizontal: screenWidth * 0.035,
+          vertical: screenHeight * 0.008,
         ),
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
@@ -371,27 +381,30 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                color: const Color(0xCC777985),
-                fontSize: screenWidth * 0.032,
-                fontFamily: 'Nunito Sans',
-                fontWeight: FontWeight.w600,
-                height: 1.40,
-                letterSpacing: -0.24,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  color: const Color(0xCC777985),
+                  fontSize: screenWidth * 0.032,
+                  fontFamily: 'Nunito Sans',
+                  fontWeight: FontWeight.w600,
+                  height: 1.40,
+                  letterSpacing: -0.24,
+                ),
               ),
-            ),
-            SizedBox(width: screenWidth * 0.02),
-            const Icon(
-              Icons.expand_more,
-              size: 12,
-              color: Color(0xCC777985),
-            ),
-          ],
+              SizedBox(width: screenWidth * 0.015),
+              const Icon(
+                Icons.expand_more,
+                size: 12,
+                color: Color(0xCC777985),
+              ),
+            ],
+          ),
         ),
       ),
     );

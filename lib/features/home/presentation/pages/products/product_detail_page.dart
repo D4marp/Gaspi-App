@@ -38,7 +38,7 @@ class ProductDetailPage extends ConsumerWidget {
     };
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF5F5F5),
       body: Stack(
         children: [
           // Main Content - Scrollable

@@ -15,6 +15,7 @@ import '../../features/home/presentation/pages/members/members_page.dart';
 import '../../features/home/presentation/pages/members/member_detail_page.dart';
 import '../../features/home/presentation/pages/members/add_member_page.dart';
 import '../../features/home/presentation/pages/members/edit_member_page.dart';
+import '../../features/home/presentation/pages/assets/assets_registration_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
@@ -211,30 +212,6 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 /// Placeholder pages dengan NavigationWrapper
-class AssetsRegistrationPage extends ConsumerWidget {
-  const AssetsRegistrationPage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return NavigationWrapper(
-      title: 'Assets Registration',
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.inventory_outlined, size: 48, color: Colors.grey[400]),
-            const SizedBox(height: 16),
-            Text(
-              'Assets Registration - Coming Soon',
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class SupervisorReportPage extends ConsumerWidget {
   const SupervisorReportPage({super.key});
 

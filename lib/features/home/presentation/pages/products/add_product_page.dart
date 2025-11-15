@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -135,13 +136,13 @@ class _AddProductPageState extends ConsumerState<AddProductPage> {
                       ),
                       const SizedBox(height: 32),
                       // Product Code Field
-                      _buildFormField(
+                      _buildModernFormField(
                         'Product Code/SKU',
                         'Enter Product Code/SKU',
                       ),
                       const SizedBox(height: 24),
                       // Category Field
-                      _buildDropdownField(
+                      _buildModernDropdownField(
                         'Gas Type/Category',
                         selectedCategory ?? 'Select Category',
                         onTap: () async {
@@ -159,7 +160,7 @@ class _AddProductPageState extends ConsumerState<AddProductPage> {
                       ),
                       const SizedBox(height: 24),
                       // Size Field
-                      _buildDropdownField(
+                      _buildModernDropdownField(
                         'Size',
                         selectedSize ?? 'Select Gas Capacity',
                         onTap: () {
@@ -168,7 +169,7 @@ class _AddProductPageState extends ConsumerState<AddProductPage> {
                       ),
                       const SizedBox(height: 24),
                       // Package Field
-                      _buildDropdownField(
+                      _buildModernDropdownField(
                         'Package',
                         selectedPackage ?? 'Select Package',
                         onTap: () async {
@@ -186,7 +187,7 @@ class _AddProductPageState extends ConsumerState<AddProductPage> {
                       ),
                       const SizedBox(height: 24),
                       // Description Field
-                      _buildTextAreaField(
+                      _buildModernTextAreaField(
                         'Description',
                         'Enter Product Description',
                       ),
@@ -246,284 +247,230 @@ class _AddProductPageState extends ConsumerState<AddProductPage> {
     );
   }
 
-  Widget _buildFormField(
+  // Modern single rounded container with subtle border and shadow.
+  // Avoid nested rounded shapes: container has rounded corners, TextField has no border.
+  Widget _buildModernFormField(
     String label,
     String placeholder,
   ) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: '$label ',
-                  style: const TextStyle(
-                    color: Color(0xFF101828),
-                    fontSize: 14,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w400,
-                    height: 1.40,
-                    letterSpacing: -0.28,
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: '$label ',
+                style: const TextStyle(
+                  color: Color(0xFF101828),
+                  fontSize: 14,
+                  fontFamily: 'Nunito Sans',
+                  fontWeight: FontWeight.w600,
+                  height: 1.40,
+                  letterSpacing: -0.28,
                 ),
-                const TextSpan(
-                  text: '*',
-                  style: TextStyle(
-                    color: Color(0xFFF1003C),
-                    fontSize: 14,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w400,
-                    height: 1.40,
-                    letterSpacing: -0.28,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 16,
-              right: 24,
-              bottom: 10,
-            ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                  width: 1.50,
-                  color: Color(0xFFEDEDED),
-                ),
-                borderRadius: BorderRadius.circular(32),
               ),
-              shadows: const [
-                BoxShadow(
-                  color: Color(0x0A000000),
-                  blurRadius: 71,
-                  offset: Offset(0, 0),
-                  spreadRadius: 0,
+              const TextSpan(
+                text: '*',
+                style: TextStyle(
+                  color: Color(0xFFD04B22),
+                  fontSize: 14,
+                  fontFamily: 'Nunito Sans',
+                  fontWeight: FontWeight.w600,
+                  height: 1.40,
+                  letterSpacing: -0.28,
                 ),
-              ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          // Single rounded box
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Color(0xFFE6E6E9), width: 1),
+            boxShadow: [
+              // subtle elevation, keeps it modern but not layered rounded
+              BoxShadow(color: Color(0x0A000000), blurRadius: 8, offset: Offset(0, 2)),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: TextField(
+            cursorColor: const Color(0xFF007EFF),
+            style: const TextStyle(
+              color: Color(0xFF101828),
+              fontSize: 14,
+              fontFamily: 'Nunito Sans',
+              fontWeight: FontWeight.w400,
             ),
-            child: TextField(
-              style: const TextStyle(
-                color: Color(0xFF353535),
-                fontSize: 12,
+            decoration: InputDecoration(
+              hintText: placeholder,
+              hintStyle: const TextStyle(
+                color: Color(0xFF9C9C9C),
+                fontSize: 14,
                 fontFamily: 'Nunito Sans',
                 fontWeight: FontWeight.w400,
               ),
-              decoration: InputDecoration(
-                hintText: placeholder,
-                hintStyle: const TextStyle(
-                  color: Color(0xFF9C9C9C),
-                  fontSize: 12,
-                  fontFamily: 'Nunito Sans',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: -0.12,
-                ),
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: EdgeInsets.zero,
-              ),
+              border: InputBorder.none, // no inner border to avoid nested rounding
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildDropdownField(
+  // Modern dropdown-styled row inside a single rounded container (no inner rounded).
+  Widget _buildModernDropdownField(
     String label,
     String placeholder, {
     required VoidCallback onTap,
   }) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text.rich(
-            TextSpan(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: '$label ',
+                style: const TextStyle(
+                  color: Color(0xFF353535),
+                  fontSize: 14,
+                  fontFamily: 'Nunito Sans',
+                  fontWeight: FontWeight.w600,
+                  height: 1.20,
+                  letterSpacing: -0.28,
+                ),
+              ),
+              const TextSpan(
+                text: '*',
+                style: TextStyle(
+                  color: Color(0xFFD04B22),
+                  fontSize: 14,
+                  fontFamily: 'Nunito Sans',
+                  fontWeight: FontWeight.w600,
+                  height: 1.20,
+                  letterSpacing: -0.28,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Color(0xFFE6E6E9), width: 1),
+              boxShadow: [
+                BoxShadow(color: Color(0x05000000), blurRadius: 6, offset: Offset(0, 2)),
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
               children: [
-                TextSpan(
-                  text: '$label ',
-                  style: const TextStyle(
-                    color: Color(0xFF353535),
-                    fontSize: 14,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w600,
-                    height: 1.20,
-                    letterSpacing: -0.28,
+                Expanded(
+                  child: Text(
+                    placeholder,
+                    style: TextStyle(
+                      color: placeholder.startsWith('Select') ? Color(0xFF9C9C9C) : Color(0xFF101828),
+                      fontSize: 14,
+                      fontFamily: 'Nunito Sans',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-                const TextSpan(
-                  text: '*',
-                  style: TextStyle(
-                    color: Color(0xFFD04B22),
-                    fontSize: 14,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w600,
-                    height: 1.20,
-                    letterSpacing: -0.28,
-                  ),
+                const Icon(
+                  Icons.expand_more,
+                  size: 20,
+                  color: Color(0xFF68686D),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 12),
-          GestureDetector(
-            onTap: onTap,
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(
-                top: 10,
-                left: 24,
-                right: 16,
-                bottom: 10,
-              ),
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(
-                    width: 1.50,
-                    color: Color(0xFFEDEDED),
-                  ),
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x0A000000),
-                    blurRadius: 71,
-                    offset: Offset(0, 0),
-                    spreadRadius: 0,
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Text(
-                      placeholder,
-                      style: const TextStyle(
-                        color: Color(0xFF68686D),
-                        fontSize: 12,
-                        fontFamily: 'Nunito Sans',
-                        fontWeight: FontWeight.w400,
-                        height: 1.40,
-                        letterSpacing: -0.24,
-                      ),
-                    ),
-                  ),
-                  const Icon(
-                    Icons.expand_more,
-                    size: 14,
-                    color: Color(0xFF68686D),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildTextAreaField(
+  // Modern textarea using the same single rounded container approach.
+  Widget _buildModernTextAreaField(
     String label,
     String placeholder,
   ) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: '$label ',
-                  style: const TextStyle(
-                    color: Color(0xFF353535),
-                    fontSize: 14,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w600,
-                    height: 1.20,
-                    letterSpacing: -0.28,
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: '$label ',
+                style: const TextStyle(
+                  color: Color(0xFF353535),
+                  fontSize: 14,
+                  fontFamily: 'Nunito Sans',
+                  fontWeight: FontWeight.w600,
+                  height: 1.20,
+                  letterSpacing: -0.28,
                 ),
-                const TextSpan(
-                  text: '*',
-                  style: TextStyle(
-                    color: Color(0xFFD04B22),
-                    fontSize: 14,
-                    fontFamily: 'Nunito Sans',
-                    fontWeight: FontWeight.w600,
-                    height: 1.20,
-                    letterSpacing: -0.28,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            width: double.infinity,
-            height: 112,
-            padding: const EdgeInsets.only(
-              top: 12,
-              left: 24,
-              right: 24,
-              bottom: 12,
-            ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                  width: 1,
-                  color: Color(0xFFF0F0F0),
-                ),
-                borderRadius: BorderRadius.circular(12),
               ),
+              const TextSpan(
+                text: '*',
+                style: TextStyle(
+                  color: Color(0xFFD04B22),
+                  fontSize: 14,
+                  fontFamily: 'Nunito Sans',
+                  fontWeight: FontWeight.w600,
+                  height: 1.20,
+                  letterSpacing: -0.28,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Color(0xFFE6E6E9), width: 1),
+            boxShadow: [
+              BoxShadow(color: Color(0x05000000), blurRadius: 6, offset: Offset(0, 2)),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: TextField(
+            maxLines: 5,
+            cursorColor: const Color(0xFF007EFF),
+            style: const TextStyle(
+              color: Color(0xFF101828),
+              fontSize: 14,
+              fontFamily: 'Nunito Sans',
+              fontWeight: FontWeight.w400,
             ),
-            child: TextField(
-              maxLines: null,
-              style: const TextStyle(
-                color: Color(0xFF353535),
-                fontSize: 12,
+            decoration: InputDecoration(
+              hintText: placeholder,
+              hintStyle: const TextStyle(
+                color: Color(0xFF9C9C9C),
+                fontSize: 14,
                 fontFamily: 'Nunito Sans',
                 fontWeight: FontWeight.w400,
               ),
-              decoration: InputDecoration(
-                hintText: placeholder,
-                hintStyle: const TextStyle(
-                  color: Color(0xFF9C9C9C),
-                  fontSize: 12,
-                  fontFamily: 'Nunito Sans',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: -0.12,
-                ),
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: EdgeInsets.zero,
-              ),
+              border: InputBorder.none, // no inner border
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

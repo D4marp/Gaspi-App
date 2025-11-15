@@ -113,55 +113,6 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title Row
-                  SizedBox(
-                    width: double.infinity,
-                    height: 38,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            // Check if we can pop, otherwise go to home
-                            if (Navigator.of(context).canPop()) {
-                              context.pop();
-                            } else {
-                              context.go('/home');
-                            }
-                          },
-                          child: Container(
-                            width: 24,
-                            height: 24,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Icon(
-                              Icons.arrow_back_ios_new,
-                              size: 20,
-                              color: Color(0xFF101828),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        const Expanded(
-                          child: Text(
-                            'Registered Assets',
-                            style: TextStyle(
-                              color: Color(0xFF101828),
-                              fontSize: 20,
-                              fontFamily: 'Nunito Sans',
-                              fontWeight: FontWeight.w700,
-                              height: 1.20,
-                              letterSpacing: -0.60,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
                   // Search and Filter Row
                   SizedBox(
                     height: 38,
@@ -307,7 +258,7 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
           // Main Content - Scrollable
           Positioned(
             left: screenWidth * 0.082,
-            top: screenHeight * 0.26,
+            top: screenHeight * 0.18,
             right: screenWidth * 0.082,
             bottom: 0,
             child: SingleChildScrollView(
@@ -418,7 +369,7 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
   ) {
     return GestureDetector(
       onTap: () {
-        // TODO: Navigate to asset detail
+        context.push('/asset-detail/${asset['id']}');
       },
       child: Container(
         width: double.infinity,

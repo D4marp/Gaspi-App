@@ -16,6 +16,7 @@ import '../../features/home/presentation/pages/members/member_detail_page.dart';
 import '../../features/home/presentation/pages/members/add_member_page.dart';
 import '../../features/home/presentation/pages/members/edit_member_page.dart';
 import '../../features/home/presentation/pages/assets/assets_registration_page.dart';
+import '../../features/home/presentation/pages/assets/asset_detail_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
@@ -170,6 +171,15 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/assets-registration',
         builder: (context, state) => const AssetsRegistrationPage(),
+      ),
+
+      // Asset Detail Route
+      GoRoute(
+        path: '/asset-detail/:assetId',
+        builder: (context, state) {
+          final assetId = state.pathParameters['assetId'] ?? '';
+          return AssetDetailPage(assetId: assetId);
+        },
       ),
 
       // QR Scan Route

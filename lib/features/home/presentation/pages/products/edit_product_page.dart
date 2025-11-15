@@ -126,18 +126,10 @@ class _EditProductPageState extends ConsumerState<EditProductPage> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(24),
                   decoration: ShapeDecoration(
-                    color: Colors.white,
+                    color: const Color(0xFFF5F5F5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    shadows: const [
-                      BoxShadow(
-                        color: Color(0x0C000000),
-                        blurRadius: 71,
-                        offset: Offset(0, 0),
-                        spreadRadius: 0,
-                      ),
-                    ],
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

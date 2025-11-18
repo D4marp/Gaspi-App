@@ -15,10 +15,11 @@ import '../../features/home/presentation/pages/members/members_page.dart';
 import '../../features/home/presentation/pages/members/member_detail_page.dart';
 import '../../features/home/presentation/pages/members/add_member_page.dart';
 import '../../features/home/presentation/pages/members/edit_member_page.dart';
-import '../../features/home/presentation/pages/assets/assets_registration_page.dart';
-import '../../features/home/presentation/pages/assets/asset_detail_page.dart';
+import '../../features/home/presentation/pages/reg_assets/assets_registration_page.dart';
+import '../../features/home/presentation/pages/reg_assets/asset_detail_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
-import '../../features/maintenance/presentation/pages/maintenance_page.dart';
+import '../../features/logs/presentation/pages/activity_logs_page.dart';
+import '../../features/maintenance/presentation/pages/maintenance_cylinder_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/qr_scanner/presentation/pages/qr_scan_page.dart';
 import '../theme/app_theme.dart';
@@ -154,17 +155,23 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Maintenance Routes
       GoRoute(
         path: '/maintenance',
-        builder: (context, state) => const MaintenancePage(),
+        builder: (context, state) => const MaintenanceCylinderPage(),
       ),
 
       GoRoute(
         path: '/maintenance-tasks',
-        builder: (context, state) => const MaintenancePage(),
+        builder: (context, state) => const MaintenanceCylinderPage(),
       ),
 
       GoRoute(
         path: '/maintenance-schedule',
-        builder: (context, state) => const MaintenancePage(),
+        builder: (context, state) => const MaintenanceCylinderPage(),
+      ),
+
+      // Activity Logs Route
+      GoRoute(
+        path: '/logs',
+        builder: (context, state) => const ActivityLogsPage(),
       ),
 
       // Assets Registration Route
@@ -175,10 +182,10 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       // Asset Detail Route
       GoRoute(
-        path: '/asset-detail/:assetId',
+        path: '/asset-detail/:id',
         builder: (context, state) {
-          final assetId = state.pathParameters['assetId'] ?? '';
-          return AssetDetailPage(assetId: assetId);
+          final id = state.pathParameters['id'] ?? '';
+          return AssetDetailPage(assetId: id);
         },
       ),
 

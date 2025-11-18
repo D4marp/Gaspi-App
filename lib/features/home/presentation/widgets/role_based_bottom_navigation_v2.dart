@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/gen/assets.gen.dart';
+import 'search_modal.dart';
 
 /// Bottom Navigation Menu berdasarkan Role - Design Baru
 class RoleBasedBottomNavigationV2 extends StatelessWidget {
@@ -111,12 +112,12 @@ class RoleBasedBottomNavigationV2 extends StatelessWidget {
               ),
             ),
           ),
-          // Floating QR button
+          // Floating QR/Search button
           Positioned(
             left: (screenWidth / 2) - 33.19,
             top: 0,
             child: GestureDetector(
-              onTap: () => context.go('/qr-scan'),
+              onTap: () => _handleCenterButtonTap(context),
               child: Container(
                 width: 66.39,
                 height: 66.39,
@@ -136,7 +137,7 @@ class RoleBasedBottomNavigationV2 extends StatelessWidget {
                   ],
                 ),
                 child: SvgPicture.asset(
-                  Assets.icons.qr,
+                  _getCenterButtonIcon(),
                   colorFilter: const ColorFilter.mode(
                     Colors.white,
                     BlendMode.srcIn,
@@ -283,5 +284,52 @@ class RoleBasedBottomNavigationV2 extends StatelessWidget {
       default:
         return '/maintenance';
     }
+  }
+
+  /// Get center button icon (QR or Search)
+  String _getCenterButtonIcon() {
+    // Show QR icon for these routes (HOME, MAINTENANCE, LOG/ACCOUNT, ASSETS REGISTRATION)
+    if (currentRoute == '/home' ||
+        currentRoute == '/maintenance' ||
+        currentRoute == '/maintenance-tasks' ||
+        currentRoute == '/maintenance-schedule' ||
+        currentRoute == '/account' ||
+        currentRoute == '/assets-registration') {
+      return Assets.icons.qr;
+    }
+    // Show Search icon for other routes
+    return Assets.icons.search;
+  }
+
+  /// Handle center button tap
+  void _handleCenterButtonTap(BuildContext context) {
+    // For assets registration route, always go to QR scan
+    if (currentRoute == '/assets-registration') {
+      context.go('/qr-scan');
+      return;
+    }
+    
+    // Check if we should show search modal
+    if (_getCenterButtonIcon() == Assets.icons.search) {
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return SearchModal(
+            onSearch: (searchQuery) {
+              // Handle search logic here
+              // You can implement search functionality based on current route
+            },
+            onCancel: () {
+              // Dialog will close automatically
+            },
+          );
+        },
+      );
+      return;
+    }
+    
+    // For QR icon, navigate to QR scan
+    context.go('/qr-scan');
   }
 }

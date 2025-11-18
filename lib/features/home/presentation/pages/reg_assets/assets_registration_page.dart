@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../auth/presentation/providers/auth_provider.dart';
 import '../../widgets/role_based_bottom_navigation.dart';
+import '../../widgets/gas_type_bottom_sheet.dart';
+import '../../widgets/capacity_bottom_sheet.dart';
+import 'asset_detail_page.dart';
 
 class AssetsRegistrationPage extends ConsumerStatefulWidget {
   const AssetsRegistrationPage({super.key});
@@ -14,6 +17,8 @@ class AssetsRegistrationPage extends ConsumerStatefulWidget {
 
 class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage> {
   late TextEditingController _searchController;
+  String? _selectedGasType;
+  String? _selectedCapacity;
 
   // Mock data for registered cylinders
   final List<Map<String, String>> _assets = [
@@ -130,11 +135,19 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
                                 side: const BorderSide(
-                                  width: 1,
-                                  color: Color(0xFFF0F0F0),
+                                  width: 0,
+                                  color: Colors.white,
                                 ),
                                 borderRadius: BorderRadius.circular(64),
                               ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x0A000000),
+                                  blurRadius: 8,
+                                  offset: Offset(0, 2),
+                                  spreadRadius: 0,
+                                ),
+                              ],
                             ),
                             child: Row(
                               children: [
@@ -185,11 +198,19 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
                                 side: const BorderSide(
-                                  width: 1,
-                                  color: Color(0xFFEDEDED),
+                                  width: 0,
+                                  color: Colors.white,
                                 ),
                                 borderRadius: BorderRadius.circular(300),
                               ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x0A000000),
+                                  blurRadius: 8,
+                                  offset: Offset(0, 2),
+                                  spreadRadius: 0,
+                                ),
+                              ],
                             ),
                             child: const Icon(
                               Icons.tune,
@@ -205,7 +226,6 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
                   // Sort and Filter Chips - Full Width
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    spacing: 0,
                     children: [
                       // Latest Chip
                       Expanded(
@@ -284,14 +304,10 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
                     // Assets List
                     Column(
                       mainAxisSize: MainAxisSize.min,
-                      spacing: screenHeight * 0.012,
                       children: _assets
                           .map((asset) => _buildAssetCard(context, asset, screenWidth, screenHeight))
                           .toList(),
                     ),
-                    SizedBox(height: screenHeight * 0.024),
-                    // Pagination
-                    _buildPagination(screenWidth, screenHeight),
                   ],
                 ),
               ),
@@ -316,7 +332,35 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
   Widget _buildFilterChip(double screenWidth, double screenHeight, String label) {
     return GestureDetector(
       onTap: () {
-        // TODO: Open filter modal
+        if (label == 'Gas Type') {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            builder: (context) => GasTypeBottomSheet(
+              selectedGasType: _selectedGasType,
+              onGasTypeSelected: (gasType) {
+                setState(() {
+                  _selectedGasType = gasType;
+                });
+              },
+            ),
+          );
+        } else if (label == 'Capacity') {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            builder: (context) => CapacityBottomSheet(
+              selectedCapacity: _selectedCapacity,
+              onCapacitySelected: (capacity) {
+                setState(() {
+                  _selectedCapacity = capacity;
+                });
+              },
+            ),
+          );
+        }
       },
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -369,51 +413,42 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
   ) {
     return GestureDetector(
       onTap: () {
-        context.push('/asset-detail/${asset['id']}');
-      },
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(screenWidth * 0.04),
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AssetDetailPage(assetId: asset['id']!),
           ),
-          shadows: [
-            BoxShadow(
-              color: const Color(0x0A000000),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
+        );
+      },
+      child: Padding(
+        padding: EdgeInsets.only(bottom: screenHeight * 0.015),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Left: ID and Product
+            // Left Column: ID and Product
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: screenHeight * 0.008,
                 children: [
                   Text(
                     asset['id'] ?? '',
-                    style: TextStyle(
-                      color: const Color(0xFF353535),
-                      fontSize: screenWidth * 0.036,
+                    style: const TextStyle(
+                      color: Color(0xFF353535),
+                      fontSize: 14,
                       fontFamily: 'Nunito Sans',
                       fontWeight: FontWeight.w600,
                       height: 1.40,
                       letterSpacing: -0.28,
                     ),
                   ),
+                  SizedBox(height: screenHeight * 0.008),
                   Text(
                     asset['product'] ?? '',
-                    style: TextStyle(
-                      color: const Color(0xFF677487),
-                      fontSize: screenWidth * 0.036,
+                    style: const TextStyle(
+                      color: Color(0xFF677487),
+                      fontSize: 14,
                       fontFamily: 'Nunito Sans',
                       fontWeight: FontWeight.w400,
                       height: 1.40,
@@ -423,30 +458,31 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
                 ],
               ),
             ),
-            SizedBox(width: screenWidth * 0.031),
-            // Right: Type and Member
+            SizedBox(width: screenWidth * 0.02),
+            // Right Column: Type and Member
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                spacing: screenHeight * 0.008,
                 children: [
                   Text(
                     asset['type'] ?? '',
-                    style: TextStyle(
-                      color: const Color(0xFF007EFF),
-                      fontSize: screenWidth * 0.036,
+                    style: const TextStyle(
+                      color: Color(0xFF007EFF),
+                      fontSize: 14,
                       fontFamily: 'Nunito Sans',
                       fontWeight: FontWeight.w600,
                       height: 1.40,
                       letterSpacing: -0.28,
                     ),
                   ),
+                  SizedBox(height: screenHeight * 0.008),
                   Text(
                     asset['member'] ?? '',
-                    style: TextStyle(
-                      color: const Color(0xFF677487),
-                      fontSize: screenWidth * 0.036,
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(
+                      color: Color(0xFF677487),
+                      fontSize: 14,
                       fontFamily: 'Nunito Sans',
                       fontWeight: FontWeight.w400,
                       height: 1.40,
@@ -457,125 +493,6 @@ class _AssetsRegistrationPageState extends ConsumerState<AssetsRegistrationPage>
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPagination(double screenWidth, double screenHeight) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Previous Button
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.04,
-              vertical: screenWidth * 0.02,
-            ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                  width: 1,
-                  color: Color(0xFFD4DBEA),
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: const Color(0x07090B0E),
-                  blurRadius: 1,
-                  offset: const Offset(0, 1),
-                )
-              ],
-            ),
-            child: Text(
-              'Previous',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: const Color(0xFF9C9C9C),
-                fontSize: screenWidth * 0.032,
-                fontFamily: 'Nunito Sans',
-                fontWeight: FontWeight.w400,
-                height: 1.60,
-              ),
-            ),
-          ),
-          SizedBox(width: screenWidth * 0.031),
-          // Page Numbers
-          Row(
-            spacing: screenWidth * 0.02,
-            children: [
-              _buildPageNumber(screenWidth, '1', isActive: true),
-              _buildPageNumber(screenWidth, '2', isActive: false),
-              _buildPageNumber(screenWidth, '...', isActive: false),
-              _buildPageNumber(screenWidth, '8', isActive: false),
-              _buildPageNumber(screenWidth, '9', isActive: false),
-            ],
-          ),
-          SizedBox(width: screenWidth * 0.031),
-          // Next Button
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.04,
-              vertical: screenWidth * 0.02,
-            ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                  width: 1,
-                  color: Color(0xFFD4DBEA),
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: const Color(0x07090B0E),
-                  blurRadius: 1,
-                  offset: const Offset(0, 1),
-                )
-              ],
-            ),
-            child: Text(
-              'Next',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: const Color(0xFF393D4E),
-                fontSize: screenWidth * 0.032,
-                fontFamily: 'Nunito Sans',
-                fontWeight: FontWeight.w400,
-                height: 1.60,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPageNumber(double screenWidth, String number, {required bool isActive}) {
-    return Container(
-      width: screenWidth * 0.085,
-      height: screenWidth * 0.085,
-      decoration: ShapeDecoration(
-        color: isActive ? const Color(0xFF007EFF) : Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        number,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: isActive ? Colors.white : const Color(0xFF9C9C9C),
-          fontSize: screenWidth * 0.032,
-          fontFamily: 'Nunito Sans',
-          fontWeight: FontWeight.w400,
-          height: 1.60,
         ),
       ),
     );

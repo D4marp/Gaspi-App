@@ -185,11 +185,19 @@ class ProductsPage extends ConsumerWidget {
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               side: const BorderSide(
-                                width: 1,
-                                color: Color(0xFFF0F0F0),
+                                width: 0,
+                                color: Colors.white,
                               ),
                               borderRadius: BorderRadius.circular(64),
                             ),
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x0A000000),
+                                blurRadius: 8,
+                                offset: Offset(0, 2),
+                                spreadRadius: 0,
+                              ),
+                            ],
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -203,14 +211,26 @@ class ProductsPage extends ConsumerWidget {
                               ),
                               SizedBox(width: screenWidth * 0.02),
                               Expanded(
-                                child: Text(
-                                  'Search at Inventory',
+                                child: TextField(
+                                  cursorColor: const Color(0xFF007EFF),
                                   style: TextStyle(
-                                    color: const Color(0xFF9C9C9C),
+                                    color: const Color(0xFF101828),
                                     fontSize: 12,
                                     fontFamily: 'Nunito Sans',
                                     fontWeight: FontWeight.w400,
-                                    letterSpacing: -0.12,
+                                  ),
+                                  decoration: const InputDecoration(
+                                    hintText: 'Search at Inventory',
+                                    hintStyle: TextStyle(
+                                      color: Color(0xFF9C9C9C),
+                                      fontSize: 12,
+                                      fontFamily: 'Nunito Sans',
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.12,
+                                    ),
+                                    border: InputBorder.none,
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.zero,
                                   ),
                                 ),
                               ),
@@ -236,11 +256,19 @@ class ProductsPage extends ConsumerWidget {
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               side: const BorderSide(
-                                width: 1,
-                                color: Color(0xFFEDEDED),
+                                width: 0,
+                                color: Colors.white,
                               ),
                               borderRadius: BorderRadius.circular(300),
                             ),
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x0A000000),
+                                blurRadius: 8,
+                                offset: Offset(0, 2),
+                                spreadRadius: 0,
+                              ),
+                            ],
                           ),
                           child: Stack(
                             children: [

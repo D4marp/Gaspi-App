@@ -53,6 +53,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/profile-circle.svg
   String get profileCircle => 'assets/icons/profile-circle.svg';
 
+  /// File path: assets/icons/search.svg
+  String get search => 'assets/icons/search.svg';
+
   /// File path: assets/icons/setting-2.svg
   String get setting2 => 'assets/icons/setting-2.svg';
 
@@ -92,6 +95,7 @@ class $AssetsIconsGen {
     menu,
     people,
     profileCircle,
+    search,
     setting2,
     shieldTickBold,
     shieldTick,

@@ -110,11 +110,19 @@ class _CategoryModalState extends State<CategoryModal> {
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(
-                          width: 1,
-                          color: Color(0xFFEDEDED),
+                          width: 0,
+                          color: Colors.white,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x0A000000),
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
+                          spreadRadius: 0,
+                        ),
+                      ],
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -130,6 +138,7 @@ class _CategoryModalState extends State<CategoryModal> {
                         Expanded(
                           child: TextField(
                             controller: searchController,
+                            cursorColor: const Color(0xFF007EFF),
                             onChanged: _filterCategories,
                             decoration: const InputDecoration(
                               hintText: 'Search Product Category',

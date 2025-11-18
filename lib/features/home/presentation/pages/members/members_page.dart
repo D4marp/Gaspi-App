@@ -88,11 +88,19 @@ class _MembersPageState extends ConsumerState<MembersPage> {
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
                                 side: const BorderSide(
-                                  width: 1,
-                                  color: Color(0xFFF0F0F0),
+                                  width: 0,
+                                  color: Colors.white,
                                 ),
                                 borderRadius: BorderRadius.circular(64),
                               ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x0A000000),
+                                  blurRadius: 8,
+                                  offset: Offset(0, 2),
+                                  spreadRadius: 0,
+                                ),
+                              ],
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -108,6 +116,7 @@ class _MembersPageState extends ConsumerState<MembersPage> {
                                 Expanded(
                                   child: TextField(
                                     controller: _searchController,
+                                    cursorColor: const Color(0xFF007EFF),
                                     decoration: InputDecoration(
                                       hintText: 'Search at Member',
                                       hintStyle: TextStyle(
@@ -124,6 +133,7 @@ class _MembersPageState extends ConsumerState<MembersPage> {
                                     style: TextStyle(
                                       fontSize: screenWidth * 0.031,
                                       fontFamily: 'Nunito Sans',
+                                      color: const Color(0xFF101828),
                                     ),
                                   ),
                                 ),
@@ -144,11 +154,19 @@ class _MembersPageState extends ConsumerState<MembersPage> {
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
                                 side: const BorderSide(
-                                  width: 1,
-                                  color: Color(0xFFEDEDED),
+                                  width: 0,
+                                  color: Colors.white,
                                 ),
                                 borderRadius: BorderRadius.circular(100),
                               ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x0A000000),
+                                  blurRadius: 8,
+                                  offset: Offset(0, 2),
+                                  spreadRadius: 0,
+                                ),
+                              ],
                             ),
                             child: Stack(
                               children: [

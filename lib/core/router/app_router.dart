@@ -6,6 +6,8 @@ import '../../features/auth/presentation/pages/splash_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/onboarding_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
+import '../../features/account/presentation/pages/account_page.dart';
+import '../../features/account/presentation/pages/edit_account_page.dart';
 import '../../features/delivery_order/presentation/pages/delivery_order_page.dart';
 import '../../features/home/presentation/pages/home/home_admin_page.dart';
 import '../../features/home/presentation/pages/partnership/partnership_opportunity_page.dart';
@@ -20,7 +22,9 @@ import '../../features/home/presentation/pages/reg_assets/asset_detail_page.dart
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
 import '../../features/logs/presentation/pages/activity_logs_page.dart';
 import '../../features/maintenance/presentation/pages/maintenance_cylinder_page.dart';
-import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/maintenance/presentation/pages/maintenance_transport_rack_page.dart';
+import '../../features/maintenance/presentation/pages/maintenance_manifold_page.dart';
+import '../../features/maintenance/presentation/pages/maintenance_selection_page.dart';
 import '../../features/qr_scanner/presentation/pages/qr_scan_page.dart';
 import '../theme/app_theme.dart';
 
@@ -155,17 +159,22 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Maintenance Routes
       GoRoute(
         path: '/maintenance',
+        builder: (context, state) => const MaintenanceSelectionPage(),
+      ),
+
+      GoRoute(
+        path: '/maintenance/cylinder',
         builder: (context, state) => const MaintenanceCylinderPage(),
       ),
 
       GoRoute(
-        path: '/maintenance-tasks',
-        builder: (context, state) => const MaintenanceCylinderPage(),
+        path: '/maintenance/transport-rack',
+        builder: (context, state) => const MaintenanceTransportRackPage(),
       ),
 
       GoRoute(
-        path: '/maintenance-schedule',
-        builder: (context, state) => const MaintenanceCylinderPage(),
+        path: '/maintenance/manifold',
+        builder: (context, state) => const MaintenanceManifoldPage(),
       ),
 
       // Activity Logs Route
@@ -195,10 +204,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const QrScanPage(),
       ),
 
-      // Account/Profile Route
+            // Account Route
       GoRoute(
         path: '/account',
-        builder: (context, state) => const ProfilePage(),
+        builder: (context, state) => const AccountPage(),
+        routes: [
+          GoRoute(
+            path: 'edit',
+            builder: (context, state) => const EditAccountPage(),
+          ),
+        ],
       ),
 
       // Notification Route

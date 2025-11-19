@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:gaspi_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:gaspi_app/features/home/presentation/widgets/role_based_bottom_navigation.dart';
 import 'package:gaspi_app/features/maintenance/data/models/maintenance_transport_rack_model.dart';
-import 'package:gaspi_app/features/maintenance/presentation/widgets/maintenance_list_item_widget.dart';
-import 'package:gaspi_app/features/maintenance/presentation/widgets/maintenance_filter_bar_widget.dart';
 import 'package:gaspi_app/features/maintenance/presentation/widgets/maintenance_pagination_widget.dart';
 
 class MaintenanceTransportRackPage extends ConsumerStatefulWidget {
@@ -153,12 +151,10 @@ class _MaintenanceTransportRackPageState extends ConsumerState<MaintenanceTransp
     final user = ref.watch(currentUserProvider);
     final userRole = user?.role.value ?? 'production';
     final currentRoute = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
-
+    
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
-    double sw(double px) => px / 390 * screenWidth;
-    double sh(double px) => px / 844 * screenHeight;
+    final navHeight = screenHeight * 0.11;
 
     final items = getFilteredAndPaginatedItems();
     final totalPages = getTotalPages();
@@ -167,128 +163,409 @@ class _MaintenanceTransportRackPageState extends ConsumerState<MaintenanceTransp
       backgroundColor: const Color(0xFFF5F5F5),
       body: Stack(
         children: [
-          // Main content
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                // Header
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.only(
-                    top: sh(48),
-                    left: sw(32),
-                    right: sw(32),
-                    bottom: sh(20),
+          // Main Content Area with List
+          Positioned(
+            left: screenWidth * 0.08,
+            top: screenHeight * 0.21,
+            right: screenWidth * 0.08,
+            bottom: navHeight + (screenHeight * 0.02),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Transport Rack Maintenance List',
+                    style: TextStyle(
+                      color: const Color(0xFF101828),
+                      fontSize: screenWidth * 0.052,
+                      fontFamily: 'Nunito Sans',
+                      fontWeight: FontWeight.w700,
+                      height: 1.10,
+                      letterSpacing: -0.40,
+                    ),
                   ),
-                  color: Colors.white,
-                  child: Column(
+                  SizedBox(height: screenHeight * 0.03),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Transport Rack Maintenance',
-                        style: TextStyle(
-                          color: const Color(0xFF191D0B),
-                          fontSize: sw(16),
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(height: sh(16)),
-                      // Filters
-                      MaintenanceFilterBarWidget(
-                        searchHint: 'Search at Transport Rack',
-                        searchController: searchController,
-                        onSearchChanged: (value) {
-                          setState(() {
-                            currentPage = 1;
-                          });
-                        },
-                        filterOptions: ['Pending', 'On Process', 'Completed'],
-                        selectedFilter: selectedFilter,
-                        onFilterChanged: (value) {
-                          setState(() {
-                            selectedFilter = value;
-                            currentPage = 1;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-
-                // List items
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: sw(20),
-                    vertical: sh(20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Transport Rack Maintenance List',
-                        style: TextStyle(
-                          color: const Color(0xFF101828),
-                          fontSize: sw(20),
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w700,
-                          height: 1.10,
-                          letterSpacing: -0.40,
-                        ),
-                      ),
-                      SizedBox(height: sh(20)),
-                      if (items.isEmpty)
-                        Column(
-                          children: [
-                            SizedBox(height: sh(50)),
+                    children: items.isEmpty
+                        ? [
+                            SizedBox(height: screenHeight * 0.05),
                             Text(
                               'No items found',
                               style: TextStyle(
                                 color: const Color(0xFF999999),
-                                fontSize: sw(14),
+                                fontSize: 14,
                                 fontFamily: 'Nunito Sans',
                               ),
                             ),
-                          ],
-                        )
-                      else
-                        Column(
-                          children: items
-                              .map((item) => MaintenanceListItemWidget(
-                                    id: item.rackId,
-                                    status: item.status,
-                                    statusColor: item.statusColor,
-                                    dateTime: item.dateTime,
-                                    subtitle: '${item.cylinderCount} Cylinders @ ${item.location}',
-                                    onTap: () {
-                                      context.push('/maintenance/transport-rack/${item.id}');
-                                    },
-                                  ))
-                              .toList(),
-                        ),
-                    ],
+                          ]
+                        : List.generate(
+                            items.length,
+                            (index) {
+                              final item = items[index];
+                              return GestureDetector(
+                                onTap: () => context.push('/maintenance/transport-rack/${item.id}'),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          item.id,
+                                          style: const TextStyle(
+                                            color: Color(0xFF353535),
+                                            fontSize: 14,
+                                            fontFamily: 'Nunito Sans',
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.40,
+                                            letterSpacing: -0.28,
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                          decoration: ShapeDecoration(
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                width: 1,
+                                                color: item.statusColor,
+                                              ),
+                                              borderRadius: BorderRadius.circular(32),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            item.status,
+                                            style: TextStyle(
+                                              color: item.statusColor,
+                                              fontSize: 12,
+                                              fontFamily: 'Nunito Sans',
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.40,
+                                              letterSpacing: -0.24,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: screenHeight * 0.008),
+                                    Text(
+                                      item.dateTime,
+                                      style: const TextStyle(
+                                        color: Color(0xFF677487),
+                                        fontSize: 14,
+                                        fontFamily: 'Nunito Sans',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.40,
+                                        letterSpacing: -0.28,
+                                      ),
+                                    ),
+                                    if (index < items.length - 1)
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+                                        child: const Divider(
+                                          color: Color(0xFFEDEDED),
+                                          thickness: 1,
+                                          height: 1,
+                                        ),
+                                      )
+                                    else
+                                      SizedBox(height: screenHeight * 0.015),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                   ),
-                ),
-
-                // Pagination
-                if (totalPages > 0)
-                  MaintenancePaginationWidget(
-                    currentPage: currentPage,
-                    totalPages: totalPages,
-                    onPageChanged: (page) {
-                      setState(() {
-                        currentPage = page;
-                      });
-                    },
-                  ),
-
-                SizedBox(height: sh(100)),
-              ],
+                  if (totalPages > 0) ...[
+                    SizedBox(height: screenHeight * 0.02),
+                    MaintenancePaginationWidget(
+                      currentPage: currentPage,
+                      totalPages: totalPages,
+                      onPageChanged: (page) {
+                        setState(() {
+                          currentPage = page;
+                        });
+                      },
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
 
-          // Bottom navigation
+          // Header Section - Fixed
+          Positioned(
+            left: 0,
+            top: 0,
+            right: 0,
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(
+                top: screenHeight * 0.06,
+                left: screenWidth * 0.08,
+                right: screenWidth * 0.08,
+              ),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: screenHeight * 0.015),
+                  // Search Bar
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: screenHeight * 0.045,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                            vertical: screenHeight * 0.012,
+                          ),
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                width: 0,
+                                color: Colors.white,
+                              ),
+                              borderRadius: BorderRadius.circular(64),
+                            ),
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x0A000000),
+                                blurRadius: 8,
+                                offset: Offset(0, 2),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.search,
+                                size: screenWidth * 0.045,
+                                color: const Color(0xFF9C9C9C),
+                              ),
+                              SizedBox(width: screenWidth * 0.02),
+                              Expanded(
+                                child: TextField(
+                                  controller: searchController,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      currentPage = 1;
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: 'Search at Transport Rack Maintenance',
+                                    hintStyle: TextStyle(
+                                      color: const Color(0xFF9C9C9C),
+                                      fontSize: screenWidth * 0.03,
+                                      fontFamily: 'Nunito Sans',
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.12,
+                                    ),
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.zero,
+                                    isDense: true,
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: screenWidth * 0.03,
+                                    fontFamily: 'Nunito Sans',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  // Filter Pills
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Latest Button (Active)
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.06,
+                            vertical: screenHeight * 0.008,
+                          ),
+                          decoration: ShapeDecoration(
+                            color: selectedFilter == null ? const Color(0xFF007EFF) : Colors.white,
+                            shape: RoundedRectangleBorder(
+                              side: selectedFilter == null 
+                                  ? const BorderSide(width: 0, color: Color(0xFF007EFF))
+                                  : const BorderSide(width: 1, color: Color(0xFFDCDBDB)),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedFilter = null;
+                                currentPage = 1;
+                              });
+                            },
+                            child: Text(
+                              'Latest',
+                              style: TextStyle(
+                                color: selectedFilter == null 
+                                    ? Colors.white.withValues(alpha: 0.80)
+                                    : const Color(0xCC777985),
+                                fontSize: 12,
+                                fontFamily: 'Nunito Sans',
+                                fontWeight: FontWeight.w600,
+                                height: 1.40,
+                                letterSpacing: -0.24,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: screenWidth * 0.02),
+                        // Pending Button
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedFilter = selectedFilter == 'Pending' ? null : 'Pending';
+                              currentPage = 1;
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.06,
+                              vertical: screenHeight * 0.008,
+                            ),
+                            decoration: ShapeDecoration(
+                              color: selectedFilter == 'Pending' ? const Color(0xFF007EFF) : Colors.white,
+                              shape: RoundedRectangleBorder(
+                                side: selectedFilter == 'Pending'
+                                    ? const BorderSide(width: 0, color: Color(0xFF007EFF))
+                                    : const BorderSide(width: 1, color: Color(0xFFDCDBDB)),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Text(
+                              'Pending',
+                              style: TextStyle(
+                                color: selectedFilter == 'Pending'
+                                    ? Colors.white.withValues(alpha: 0.80)
+                                    : const Color(0xCC777985),
+                                fontSize: 12,
+                                fontFamily: 'Nunito Sans',
+                                fontWeight: FontWeight.w600,
+                                height: 1.40,
+                                letterSpacing: -0.24,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: screenWidth * 0.02),
+                        // On Process Button
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedFilter = selectedFilter == 'On Process' ? null : 'On Process';
+                              currentPage = 1;
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.06,
+                              vertical: screenHeight * 0.008,
+                            ),
+                            decoration: ShapeDecoration(
+                              color: selectedFilter == 'On Process' ? const Color(0xFF007EFF) : Colors.white,
+                              shape: RoundedRectangleBorder(
+                                side: selectedFilter == 'On Process'
+                                    ? const BorderSide(width: 0, color: Color(0xFF007EFF))
+                                    : const BorderSide(width: 1, color: Color(0xFFDCDBDB)),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Text(
+                              'On Process',
+                              style: TextStyle(
+                                color: selectedFilter == 'On Process'
+                                    ? Colors.white.withValues(alpha: 0.80)
+                                    : const Color(0xCC777985),
+                                fontSize: 12,
+                                fontFamily: 'Nunito Sans',
+                                fontWeight: FontWeight.w600,
+                                height: 1.40,
+                                letterSpacing: -0.24,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: screenWidth * 0.02),
+                        // Completed Button
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedFilter = selectedFilter == 'Completed' ? null : 'Completed';
+                              currentPage = 1;
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.06,
+                              vertical: screenHeight * 0.008,
+                            ),
+                            decoration: ShapeDecoration(
+                              color: selectedFilter == 'Completed' ? const Color(0xFF007EFF) : Colors.white,
+                              shape: RoundedRectangleBorder(
+                                side: selectedFilter == 'Completed'
+                                    ? const BorderSide(width: 0, color: Color(0xFF007EFF))
+                                    : const BorderSide(width: 1, color: Color(0xFFDCDBDB)),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Text(
+                              'Completed',
+                              style: TextStyle(
+                                color: selectedFilter == 'Completed'
+                                    ? Colors.white.withValues(alpha: 0.80)
+                                    : const Color(0xCC777985),
+                                fontSize: 12,
+                                fontFamily: 'Nunito Sans',
+                                fontWeight: FontWeight.w600,
+                                height: 1.40,
+                                letterSpacing: -0.24,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.015),
+                ],
+              ),
+            ),
+          ),
+
+          // Bottom Navigation
           Positioned(
             left: 0,
             right: 0,

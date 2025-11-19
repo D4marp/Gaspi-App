@@ -21,109 +21,73 @@ class MaintenanceListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    double sw(double px) => px / 390 * screenWidth;
     double sh(double px) => px / 844 * screenHeight;
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(
-          horizontal: sw(20),
-          vertical: sh(16),
-        ),
+        padding: EdgeInsets.zero,
         margin: EdgeInsets.only(bottom: sh(12)),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFEDEDED), width: 1),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x0A000000),
-              blurRadius: 8,
-              offset: Offset(0, 2),
-            ),
-          ],
+          color: Colors.transparent,
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Cylinder $id',
-                        style: TextStyle(
-                          color: const Color(0xFF101828),
-                          fontSize: sw(16),
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w700,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (subtitle != null) ...[
-                        SizedBox(height: sh(4)),
-                        Flexible(
-                          child: Text(
-                            subtitle!,
-                            style: TextStyle(
-                              color: const Color(0xFF999999),
-                              fontSize: sw(12),
-                              fontFamily: 'Nunito Sans',
-                              fontWeight: FontWeight.w400,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ),
-                      ],
-                    ],
+                Text(
+                  id,
+                  style: const TextStyle(
+                    color: Color(0xFF353535),
+                    fontSize: 14,
+                    fontFamily: 'Nunito Sans',
+                    fontWeight: FontWeight.w600,
+                    height: 1.40,
+                    letterSpacing: -0.28,
                   ),
                 ),
-                SizedBox(width: sw(12)),
-                Flexible(
-                  fit: FlexFit.loose,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: sw(12),
-                      vertical: sh(6),
-                    ),
-                    decoration: BoxDecoration(
-                      color: statusColor.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: statusColor, width: 1),
-                    ),
-                    child: Text(
-                      status,
-                      style: TextStyle(
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 1,
                         color: statusColor,
-                        fontSize: sw(11),
-                        fontFamily: 'Nunito Sans',
-                        fontWeight: FontWeight.w700,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                  ),
+                  child: Text(
+                    status,
+                    style: TextStyle(
+                      color: statusColor,
+                      fontSize: 12,
+                      fontFamily: 'Nunito Sans',
+                      fontWeight: FontWeight.w600,
+                      height: 1.40,
+                      letterSpacing: -0.24,
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: sh(12)),
+            const SizedBox(height: 8),
             Text(
               dateTime,
-              style: TextStyle(
-                color: const Color(0xFF999999),
-                fontSize: sw(11),
+              style: const TextStyle(
+                color: Color(0xFF677487),
+                fontSize: 14,
                 fontFamily: 'Nunito Sans',
                 fontWeight: FontWeight.w400,
+                height: 1.40,
+                letterSpacing: -0.28,
               ),
             ),
           ],

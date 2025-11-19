@@ -35,6 +35,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/document-text.svg
   String get documentText => 'assets/icons/document-text.svg';
 
+  /// File path: assets/icons/edit-2.svg
+  String get edit2 => 'assets/icons/edit-2.svg';
+
   /// File path: assets/icons/edit.svg
   String get edit => 'assets/icons/edit.svg';
 
@@ -52,6 +55,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/profile-circle.svg
   String get profileCircle => 'assets/icons/profile-circle.svg';
+
+  /// File path: assets/icons/profile.svg
+  String get profile => 'assets/icons/profile.svg';
 
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
@@ -74,6 +80,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/task.svg
   String get task => 'assets/icons/task.svg';
 
+  /// File path: assets/icons/timer.svg
+  String get timer => 'assets/icons/timer.svg';
+
   /// File path: assets/icons/truck-fast.svg
   String get truckFast => 'assets/icons/truck-fast.svg';
 
@@ -89,12 +98,14 @@ class $AssetsIconsGen {
     box,
     convert3dCube,
     documentText,
+    edit2,
     edit,
     home2,
     mdiGasCylinder,
     menu,
     people,
     profileCircle,
+    profile,
     search,
     setting2,
     shieldTickBold,
@@ -102,6 +113,7 @@ class $AssetsIconsGen {
     shop,
     stickynote,
     task,
+    timer,
     truckFast,
     userTag,
   ];
@@ -152,11 +164,14 @@ class $AssetsLogosGen {
   /// File path: assets/logos/logo.svg
   String get logo => 'assets/logos/logo.svg';
 
+  /// File path: assets/logos/profile.png
+  AssetGenImage get profile => const AssetGenImage('assets/logos/profile.png');
+
   /// File path: assets/logos/splash.svg
   String get splash => 'assets/logos/splash.svg';
 
   /// List of all assets
-  List<String> get values => [readme, logo, splash];
+  List<dynamic> get values => [readme, logo, profile, splash];
 }
 
 class Assets {

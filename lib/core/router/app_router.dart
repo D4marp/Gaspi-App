@@ -18,6 +18,9 @@ import '../../features/home/presentation/pages/members/member_detail_page.dart';
 import '../../features/home/presentation/pages/members/add_member_page.dart';
 import '../../features/home/presentation/pages/members/edit_member_page.dart';
 import '../../features/home/presentation/pages/user_management/user_management_page.dart';
+import '../../features/home/presentation/pages/user_management/user_detail_page.dart';
+import '../../features/home/presentation/pages/user_management/add_user_page.dart';
+import '../../features/home/presentation/pages/user_management/edit_user_page.dart';
 import '../../features/home/presentation/pages/reg_assets/assets_registration_page.dart';
 import '../../features/home/presentation/pages/reg_assets/asset_detail_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
@@ -149,6 +152,27 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/user-management',
         builder: (context, state) => const UserManagementPage(),
+      ),
+
+      GoRoute(
+        path: '/user-management/detail/:name',
+        builder: (context, state) {
+          final userName = state.pathParameters['name'] ?? '';
+          return UserDetailPage(userName: userName);
+        },
+      ),
+
+      GoRoute(
+        path: '/user-management/add',
+        builder: (context, state) => const AddUserPage(),
+      ),
+
+      GoRoute(
+        path: '/user-management/edit/:name',
+        builder: (context, state) {
+          final userName = state.pathParameters['name'] ?? '';
+          return EditUserPage(userName: userName);
+        },
       ),
 
       // Delivery Order Routes

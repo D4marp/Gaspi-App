@@ -113,7 +113,9 @@ class _UserManagementPageState extends ConsumerState<UserManagementPage> {
 
                         return GestureDetector(
                           onTap: () {
-                            context.push('/user-management/detail/$name');
+                            // Using Uri.encodeComponent to handle spaces and special characters
+                            final encodedName = Uri.encodeComponent(name);
+                            context.push('/user-management/detail/$encodedName');
                           },
                           child: Column(
                             mainAxisSize: MainAxisSize.min,

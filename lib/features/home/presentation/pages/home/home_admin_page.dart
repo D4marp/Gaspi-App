@@ -208,7 +208,7 @@ class HomeAdminPage extends ConsumerWidget {
                           title: 'User Manage',
                           subtitle: 'Administrator\n& Member',
                           icon: Assets.icons.people,
-                          onTap: () => context.go('/users'),
+                          onTap: () => context.go('/user-management'),
                         ),
                         SizedBox(width: screenWidth * 0.062),
                         _buildMenuCard(

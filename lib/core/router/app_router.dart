@@ -17,6 +17,7 @@ import '../../features/home/presentation/pages/members/members_page.dart';
 import '../../features/home/presentation/pages/members/member_detail_page.dart';
 import '../../features/home/presentation/pages/members/add_member_page.dart';
 import '../../features/home/presentation/pages/members/edit_member_page.dart';
+import '../../features/home/presentation/pages/user_management/user_management_page.dart';
 import '../../features/home/presentation/pages/reg_assets/assets_registration_page.dart';
 import '../../features/home/presentation/pages/reg_assets/asset_detail_page.dart';
 import '../../features/home/presentation/widgets/navigation_wrapper.dart';
@@ -142,6 +143,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           final memberId = state.pathParameters['memberId'] ?? '';
           return EditMemberPage(memberId: memberId);
         },
+      ),
+
+      // User Management Routes
+      GoRoute(
+        path: '/user-management',
+        builder: (context, state) => const UserManagementPage(),
       ),
 
       // Delivery Order Routes

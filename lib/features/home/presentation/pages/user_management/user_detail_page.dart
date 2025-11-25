@@ -127,10 +127,8 @@ class UserDetailPage extends ConsumerWidget {
                         const SizedBox(width: 8),
                         GestureDetector(
                           onTap: () {
-                            // TODO: Navigate to edit user page
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Edit user - Coming soon')),
-                            );
+                            final encodedName = Uri.encodeComponent(userDetail['name'] as String);
+                            context.push('/user-management/edit/$encodedName');
                           },
                           child: SvgPicture.asset(
                             Assets.icons.edit,
